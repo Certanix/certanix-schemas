@@ -1,0 +1,92 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "cert": "https://schema.certanix.eu/v1/evidence#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "prov": "http://www.w3.org/ns/prov#",
+
+    "id": "@id",
+    "type": "@type",
+
+    "EvidencePack": "cert:EvidencePack",
+    "Subject": "cert:Subject",
+    "CampaignSummary": "cert:CampaignSummary",
+    "ScenarioResult": "cert:ScenarioResult",
+    "SHAPRecord": "cert:SHAPRecord",
+    "ComplianceMapping": "cert:ComplianceMapping",
+    "Artefact": "cert:Artefact",
+    "Provenance": "cert:Provenance",
+    "Signature": "cert:Signature",
+
+    "subject": {"@id": "cert:subject", "@type": "@id"},
+    "campaign": {"@id": "cert:campaign", "@type": "@id"},
+    "scenario_results": {"@id": "cert:scenarioResult", "@type": "@id", "@container": "@set"},
+    "shap_records": {"@id": "cert:shapRecord", "@type": "@id", "@container": "@set"},
+    "compliance_mappings": {"@id": "cert:complianceMappings", "@type": "@id"},
+    "artefacts": {"@id": "cert:artefact", "@type": "@id", "@container": "@set"},
+    "provenance": {"@id": "cert:provenance", "@type": "@id"},
+    "signature": {"@id": "cert:signature", "@type": "@id"},
+
+    "tenant": "cert:tenant",
+    "device_manifest": "cert:deviceManifest",
+    "ai_policy_uri": {"@id": "cert:aiPolicyUri", "@type": "@id"},
+    "policy_hash": "cert:policyHash",
+
+    "scenarios_executed": {"@id": "cert:scenariosExecuted", "@type": "xsd:integer"},
+    "environments_per_scenario": {"@id": "cert:environmentsPerScenario", "@type": "xsd:integer"},
+    "total_simulation_hours": {"@id": "cert:totalSimulationHours", "@type": "xsd:double"},
+    "assurance_target": "cert:assuranceTarget",
+    "scenario_pass_rate": {"@id": "cert:scenarioPassRate", "@type": "xsd:double"},
+    "adversarial_robustness_score": {"@id": "cert:adversarialRobustnessScore", "@type": "xsd:double"},
+    "tail_probability_estimate": {"@id": "cert:tailProbabilityEstimate", "@type": "xsd:double"},
+    "explainability_coverage": {"@id": "cert:explainabilityCoverage", "@type": "xsd:double"},
+    "dataset_diversity_score": {"@id": "cert:datasetDiversityScore", "@type": "xsd:double"},
+
+    "scenario_id": "cert:scenarioId",
+    "name": "cert:name",
+    "status": "cert:status",
+    "environments_executed": {"@id": "cert:environmentsExecuted", "@type": "xsd:integer"},
+    "metrics": {"@id": "cert:metrics", "@container": "@index"},
+    "anomalies": {"@id": "cert:anomaly", "@container": "@set"},
+    "seed": {"@id": "cert:seed", "@type": "xsd:integer"},
+    "deterministic_hash": "cert:deterministicHash",
+
+    "decision_id": "cert:decisionId",
+    "ai_policy": "cert:aiPolicy",
+    "feature_attributions": {"@id": "cert:featureAttributions", "@container": "@index"},
+    "base_value": {"@id": "cert:baseValue", "@type": "xsd:double"},
+    "prediction": "cert:prediction",
+
+    "ai_act_annex_iv": {"@id": "cert:aiActAnnexIv", "@container": "@index"},
+    "easa_l2_ml": {"@id": "cert:easaL2Ml", "@container": "@index"},
+    "do_178c": {"@id": "cert:do178c"},
+    "achieved_dal": "cert:achievedDal",
+    "limitations": "cert:limitations",
+
+    "clause": "cert:clause",
+    "clause_text_ref": {
+      "@id": "cert:clauseTextRef",
+      "@context": {
+        "file": "cert:refFile",
+        "legal": "cert:refLegal"
+      }
+    },
+    "platform_response": "cert:platformResponse",
+    "evidence_artifacts": {"@id": "cert:evidenceArtifact", "@container": "@set"},
+    "content_id": "cert:contentId",
+
+    "cid": {"@id": "cert:cid", "@type": "@id"},
+
+    "platform_version": "cert:platformVersion",
+    "gazebo_version": "cert:gazeboVersion",
+    "pasqal_pulser_version": "cert:pasqalPulserVersion",
+    "ran_on": "cert:ranOn",
+    "ran_at": {"@id": "prov:generatedAtTime", "@type": "xsd:dateTime"},
+    "component_versions": {"@id": "cert:componentVersions", "@container": "@index"},
+    "quantum_job_ids": {"@id": "cert:quantumJobId", "@container": "@set"},
+
+    "algorithm": "cert:algorithm",
+    "signer_dn": "cert:signerDn",
+    "signature_b64": "cert:signatureB64"
+  }
+}
