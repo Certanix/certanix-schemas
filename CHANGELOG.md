@@ -1,7 +1,19 @@
 # Changelog
 
-Every published file with its sha256 at publication. A file whose digest changes has been
-edited, which the immutability rule forbids for everything but additive context terms.
+Every published file with its sha256 at publication — the **immutability ledger**, read
+back by `tools/build_schemas_repo.py --check`, which refuses to rebuild any path whose
+bytes would change. A digest that moves means a file was edited, which is forbidden for
+everything but additive context terms; the correct response to needing different bytes is
+a new path, never a new digest at an old one.
+
+Newest first.
+
+## 2026-09-07 — .nojekyll, CNAME
+
+| File | sha256 |
+|---|---|
+| `.nojekyll` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `CNAME` | `6cb3a1ddabfe5f60f583941752d2db03274dfd61c4afe3aad313631ff7362be4` |
 
 ## 2026-09-07 — first publication
 
