@@ -1,0 +1,641 @@
+{
+  "$defs": {
+    "ControlMode": {
+      "description": "L4 highest autonomy level the system is operated at.",
+      "enum": [
+        "manual",
+        "assisted",
+        "supervised_autonomous",
+        "autonomous"
+      ],
+      "title": "ControlMode",
+      "type": "string"
+    },
+    "Datalink": {
+      "description": "L4 primary command-and-control bearer.",
+      "enum": [
+        "c2_radio",
+        "lte",
+        "5g",
+        "satcom",
+        "wifi"
+      ],
+      "title": "Datalink",
+      "type": "string"
+    },
+    "DesignAssuranceLevel": {
+      "description": "L5 DO-178C / ED-12C Design Assurance Level.\n\nPer CLAUDE.md / Spec Sheet scope the platform targets DAL D realistically\nand DAL C aspirationally; A and B are out of scope but kept in the\nvocabulary so a manifest claiming them validates and is caught downstream.",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "title": "DesignAssuranceLevel",
+      "type": "string"
+    },
+    "DeviceSpec": {
+      "additionalProperties": false,
+      "description": "§5.1 ``spec``: the six-layer model of the system under test.",
+      "properties": {
+        "l1_geometry": {
+          "$ref": "#/$defs/L1Geometry"
+        },
+        "l2_propulsion": {
+          "$ref": "#/$defs/L2Propulsion"
+        },
+        "l3_sensors": {
+          "$ref": "#/$defs/L3Sensors"
+        },
+        "l4_c2": {
+          "$ref": "#/$defs/L4C2"
+        },
+        "l5_software": {
+          "$ref": "#/$defs/L5Software"
+        },
+        "l6_odd": {
+          "$ref": "#/$defs/L6ODD"
+        }
+      },
+      "required": [
+        "l1_geometry",
+        "l2_propulsion",
+        "l3_sensors",
+        "l4_c2",
+        "l5_software",
+        "l6_odd"
+      ],
+      "title": "DeviceSpec",
+      "type": "object"
+    },
+    "EnergySource": {
+      "description": "L2 energy storage / generation.",
+      "enum": [
+        "battery_lipo",
+        "battery_liion",
+        "fuel_cell",
+        "hybrid_genset"
+      ],
+      "title": "EnergySource",
+      "type": "string"
+    },
+    "FrameType": {
+      "description": "L1 physical frame topology.\n\nAirframes (multirotor … vtol) plus non-aerial ground classes. ``QUADRUPED`` is a\nlegged ground robot (renders as Boston Dynamics Spot — a static, ingest-only\ntwin). ``WHEELED`` is a wheeled ground robot (renders as a Pioneer 3-AT); it is\nthe Stage-B *tested* ground vehicle. The coarse aerial/ground split lives in\n:data:`GROUND_FRAME_TYPES` / :func:`vehicle_class`; what is actually *testable*\nis decided by the harness registry, not by this enum.",
+      "enum": [
+        "multirotor",
+        "quadrotor",
+        "hexarotor",
+        "octorotor",
+        "fixed_wing",
+        "vtol",
+        "quadruped",
+        "wheeled"
+      ],
+      "title": "FrameType",
+      "type": "string"
+    },
+    "GroundOperationType": {
+      "description": "L6 operation mode for a GROUND vehicle — the honest ground-robot equivalent\nof the aerial line-of-sight regime (fixes the awkward reuse of ``vlos`` for a\nrobot that does not fly). A per-class validator (:class:`DeviceSpec`) makes\naerial/ground cross-declarations UNREPRESENTABLE.",
+      "enum": [
+        "teleoperated",
+        "supervised",
+        "autonomous"
+      ],
+      "title": "GroundOperationType",
+      "type": "string"
+    },
+    "IntendedPurpose": {
+      "description": "Declared intended purpose (§5.1 ``metadata``). ``military`` is DELIBERATELY\nnot representable: an exclusively-military system is out of AI-Act scope\n(Art. 2(3)), so the schema cannot declare one — the honesty is structural.",
+      "enum": [
+        "civilian",
+        "dual_use"
+      ],
+      "title": "IntendedPurpose",
+      "type": "string"
+    },
+    "L1Geometry": {
+      "additionalProperties": false,
+      "description": "L1 — physical airframe geometry and mass properties.",
+      "properties": {
+        "frame_type": {
+          "$ref": "#/$defs/FrameType"
+        },
+        "mass_kg": {
+          "exclusiveMinimum": 0.0,
+          "title": "Mass Kg",
+          "type": "number"
+        },
+        "max_dimension_m": {
+          "description": "Largest span / diagonal.",
+          "exclusiveMinimum": 0.0,
+          "title": "Max Dimension M",
+          "type": "number"
+        },
+        "payload_capacity_kg": {
+          "default": 0.0,
+          "minimum": 0.0,
+          "title": "Payload Capacity Kg",
+          "type": "number"
+        },
+        "rotor_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Rotor Count",
+          "type": "integer"
+        },
+        "track_width_m": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Track Width M"
+        },
+        "wheel_radius_m": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Wheel Radius M"
+        }
+      },
+      "required": [
+        "frame_type",
+        "mass_kg",
+        "max_dimension_m"
+      ],
+      "title": "L1Geometry",
+      "type": "object"
+    },
+    "L2Propulsion": {
+      "additionalProperties": false,
+      "description": "L2 — propulsion and energy storage.",
+      "properties": {
+        "battery_capacity_wh": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Battery Capacity Wh"
+        },
+        "energy_source": {
+          "$ref": "#/$defs/EnergySource",
+          "default": "battery_lipo"
+        },
+        "max_endurance_min": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Endurance Min"
+        },
+        "max_speed_ms": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Speed Ms"
+        },
+        "max_thrust_n": {
+          "description": "Total installed thrust.",
+          "exclusiveMinimum": 0.0,
+          "title": "Max Thrust N",
+          "type": "number"
+        },
+        "motor_count": {
+          "exclusiveMinimum": 0,
+          "title": "Motor Count",
+          "type": "integer"
+        },
+        "propulsion_type": {
+          "$ref": "#/$defs/PropulsionType"
+        }
+      },
+      "required": [
+        "propulsion_type",
+        "motor_count",
+        "max_thrust_n"
+      ],
+      "title": "L2Propulsion",
+      "type": "object"
+    },
+    "L3Sensors": {
+      "additionalProperties": false,
+      "description": "L3 — the perception suite.\n\nAt least one sensor is required; a system with no sensors cannot be twinned\nor flown, so an empty suite is a validation error rather than a default.",
+      "properties": {
+        "sensor_fusion": {
+          "default": true,
+          "title": "Sensor Fusion",
+          "type": "boolean"
+        },
+        "suite": {
+          "items": {
+            "$ref": "#/$defs/SensorSpec"
+          },
+          "minItems": 1,
+          "title": "Suite",
+          "type": "array"
+        }
+      },
+      "required": [
+        "suite"
+      ],
+      "title": "L3Sensors",
+      "type": "object"
+    },
+    "L4C2": {
+      "additionalProperties": false,
+      "description": "L4 — command, control and the link contingency policy.",
+      "properties": {
+        "command_latency_ms": {
+          "default": 0.0,
+          "minimum": 0.0,
+          "title": "Command Latency Ms",
+          "type": "number"
+        },
+        "control_mode": {
+          "$ref": "#/$defs/ControlMode"
+        },
+        "datalink": {
+          "$ref": "#/$defs/Datalink",
+          "default": "c2_radio"
+        },
+        "link_encrypted": {
+          "default": true,
+          "title": "Link Encrypted",
+          "type": "boolean"
+        },
+        "lost_link_behavior": {
+          "$ref": "#/$defs/LostLinkBehavior",
+          "default": "return_to_home"
+        }
+      },
+      "required": [
+        "control_mode"
+      ],
+      "title": "L4C2",
+      "type": "object"
+    },
+    "L5Software": {
+      "additionalProperties": false,
+      "description": "L5 — the autonomy / software stack under certification.\n\n``ai_policy_uri`` + ``ai_policy_hash`` pin the exact learned policy the\ncampaign exercises; they flow to the evidence pack ``subject`` block. The\nDAL is the DO-178C assurance claim the §9.5 mapping argues.",
+      "properties": {
+        "ai_policy_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ai Policy Hash"
+        },
+        "ai_policy_uri": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ai Policy Uri"
+        },
+        "autonomy_stack": {
+          "minLength": 1,
+          "title": "Autonomy Stack",
+          "type": "string"
+        },
+        "design_assurance_level": {
+          "$ref": "#/$defs/DesignAssuranceLevel",
+          "default": "D"
+        },
+        "flight_controller_fw": {
+          "minLength": 1,
+          "title": "Flight Controller Fw",
+          "type": "string"
+        },
+        "ml_components": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ml Components",
+          "type": "array"
+        }
+      },
+      "required": [
+        "autonomy_stack",
+        "flight_controller_fw"
+      ],
+      "title": "L5Software",
+      "type": "object"
+    },
+    "L6ODD": {
+      "additionalProperties": false,
+      "description": "L6 — the Operational Design Domain: the envelope the system is cleared\nfor (§5.1). The twin generator samples scenarios inside this envelope and\nthe tail-probability argument is only valid within it.",
+      "properties": {
+        "airspace_class": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Airspace Class"
+        },
+        "lighting": {
+          "$ref": "#/$defs/LightingCondition",
+          "default": "day"
+        },
+        "max_altitude_m_agl": {
+          "exclusiveMinimum": 0.0,
+          "title": "Max Altitude M Agl",
+          "type": "number"
+        },
+        "max_range_km": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Range Km"
+        },
+        "max_wind_speed_ms": {
+          "default": 0.0,
+          "minimum": 0.0,
+          "title": "Max Wind Speed Ms",
+          "type": "number"
+        },
+        "operation_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OperationType"
+            },
+            {
+              "$ref": "#/$defs/GroundOperationType"
+            }
+          ],
+          "title": "Operation Type"
+        },
+        "temperature_max_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Temperature Max C"
+        },
+        "temperature_min_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Temperature Min C"
+        }
+      },
+      "required": [
+        "operation_type",
+        "max_altitude_m_agl"
+      ],
+      "title": "L6ODD",
+      "type": "object"
+    },
+    "LightingCondition": {
+      "description": "L6 cleared lighting envelope.",
+      "enum": [
+        "day",
+        "night",
+        "day_night"
+      ],
+      "title": "LightingCondition",
+      "type": "string"
+    },
+    "LostLinkBehavior": {
+      "description": "L4 contingency on C2 link loss (§5.1; drives the lost-link scenarios).",
+      "enum": [
+        "return_to_home",
+        "hover",
+        "land",
+        "continue_mission"
+      ],
+      "title": "LostLinkBehavior",
+      "type": "string"
+    },
+    "Metadata": {
+      "additionalProperties": false,
+      "description": "Identity of the system under test (§5.1 ``metadata``).\n\n``tenant`` and ``name`` flow through to the evidence pack ``subject`` block;\n``certification_target`` names the regulatory basis the campaign argues\nagainst (e.g. an EASA Special Condition or a SORA/SAIL level).",
+      "properties": {
+        "certification_target": {
+          "minLength": 1,
+          "title": "Certification Target",
+          "type": "string"
+        },
+        "intended_purpose": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IntendedPurpose"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "manufacturer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Manufacturer"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "tenant": {
+          "minLength": 1,
+          "title": "Tenant",
+          "type": "string"
+        },
+        "variant": {
+          "minLength": 1,
+          "title": "Variant",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "tenant",
+        "variant",
+        "certification_target"
+      ],
+      "title": "Metadata",
+      "type": "object"
+    },
+    "OperationType": {
+      "description": "L6 line-of-sight regime an AERIAL operation is flown under.",
+      "enum": [
+        "vlos",
+        "evlos",
+        "bvlos"
+      ],
+      "title": "OperationType",
+      "type": "string"
+    },
+    "PropulsionType": {
+      "description": "L2 prime-mover class.",
+      "enum": [
+        "electric",
+        "hybrid",
+        "combustion"
+      ],
+      "title": "PropulsionType",
+      "type": "string"
+    },
+    "SensorSpec": {
+      "additionalProperties": false,
+      "description": "A single sensor in the L3 perception suite.\n\n``redundancy`` is the count of independent units of this modality; >1 is\nwhat lets a lost-sensor scenario be flown without an immediate loss of the\nfunction (drives the §5.2 sensor-dropout scenarios).",
+      "properties": {
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "redundancy": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Redundancy",
+          "type": "integer"
+        },
+        "type": {
+          "$ref": "#/$defs/SensorType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "SensorSpec",
+      "type": "object"
+    },
+    "SensorType": {
+      "description": "L3 sensor modality.",
+      "enum": [
+        "imu",
+        "gnss",
+        "lidar",
+        "radar",
+        "camera_rgb",
+        "camera_thermal",
+        "barometer",
+        "magnetometer"
+      ],
+      "title": "SensorType",
+      "type": "string"
+    }
+  },
+  "$id": "https://schema.certanix.eu/manifest/v1/device-manifest.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Generated from the platform's pydantic models — the models are the single source of truth and this file is build output. NOTE: JSON Schema cannot express the cross-field rule that an aerial frame must declare an aerial operation type (and a ground frame a ground one). That rule is enforced by `certanix-manifest validate`, which runs the models themselves. A document that satisfies this schema is structurally valid, not necessarily valid.",
+  "properties": {
+    "apiVersion": {
+      "const": "certanix.eu/v1",
+      "title": "Apiversion",
+      "type": "string"
+    },
+    "kind": {
+      "const": "DeviceManifest",
+      "title": "Kind",
+      "type": "string"
+    },
+    "metadata": {
+      "$ref": "#/$defs/Metadata"
+    },
+    "spec": {
+      "$ref": "#/$defs/DeviceSpec"
+    }
+  },
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "title": "Certanix device manifest",
+  "type": "object"
+}

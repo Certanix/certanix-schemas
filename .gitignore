@@ -1,0 +1,6 @@
+# macOS Finder droppings — this repository had one at the root before it was published.
+.DS_Store
+
+# Nothing else belongs here. Every file in this repository is BUILD OUTPUT of
+# tools/build_schemas_repo.py in certanix-beta; if something is untracked here, it is
+# either a mistake or it needs adding to the generator.

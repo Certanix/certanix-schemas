@@ -1,0 +1,227 @@
+{
+  "$defs": {
+    "PackRef": {
+      "additionalProperties": false,
+      "description": "One input, identified by what it IS rather than by where it was found.\n\n``canonical_sha256`` is the digest of the bytes that were signed, so a delta names\nits inputs unforgeably: you can hold a pack and prove it is the one that was\ncompared, or prove it is not.",
+      "properties": {
+        "canonical_sha256": {
+          "title": "Canonical Sha256",
+          "type": "string"
+        },
+        "pack_id": {
+          "title": "Pack Id",
+          "type": "string"
+        },
+        "platform_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Platform Version"
+        },
+        "ran_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ran At"
+        },
+        "scenarios_executed": {
+          "minimum": 0,
+          "title": "Scenarios Executed",
+          "type": "integer"
+        },
+        "schema_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Schema Version"
+        },
+        "solver_class": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Solver Class"
+        }
+      },
+      "required": [
+        "pack_id",
+        "canonical_sha256",
+        "scenarios_executed"
+      ],
+      "title": "PackRef",
+      "type": "object"
+    },
+    "Signature": {
+      "additionalProperties": false,
+      "description": "Detached cosign signature over the artifact's canonical bytes.",
+      "properties": {
+        "algorithm": {
+          "default": "ECDSA-P256",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "key_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Key Source"
+        },
+        "signature_b64": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signature B64"
+        }
+      },
+      "title": "Signature",
+      "type": "object"
+    }
+  },
+  "$id": "https://schema.certanix.eu/v1/delta-refusal-1.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A STANDALONE signed root with its own `schema_version` line — not a field of an evidence pack, so the pack schema does not move when this one does. FROZEN: a correction is a new version. Structural validity only.",
+  "properties": {
+    "artifact_type": {
+      "const": "delta-refusal",
+      "default": "delta-refusal",
+      "title": "Artifact Type",
+      "type": "string"
+    },
+    "baseline": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PackRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "candidate": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PackRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "detail": {
+      "title": "Detail",
+      "type": "string"
+    },
+    "generated_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Generated At"
+    },
+    "mismatches": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Mismatches",
+      "type": "array"
+    },
+    "platform_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Platform Version"
+    },
+    "reason_code": {
+      "enum": [
+        "baseline-unverifiable",
+        "candidate-unverifiable",
+        "incomparable-battery"
+      ],
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "signature": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Signature"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "subject": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Subject"
+    }
+  },
+  "required": [
+    "reason_code",
+    "detail"
+  ],
+  "title": "Certanix delta refusal, schema 1.0",
+  "type": "object"
+}

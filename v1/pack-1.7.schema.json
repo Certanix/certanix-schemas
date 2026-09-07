@@ -1,0 +1,1039 @@
+{
+  "$defs": {
+    "AnnexIVClauseMapping": {
+      "additionalProperties": false,
+      "description": "One EU AI Act Annex IV clause mapping (Regulation (EU) 2024/1689).\n\nProduced by the ``map_clause_*`` functions in\n:mod:`certanix.evidence.ai_act_mapping`. ``limitations`` states honestly\nwhat is Alpha-only and must never be empty — it is what protects the\ndocument's credibility under technical scrutiny.",
+      "properties": {
+        "clause": {
+          "title": "Clause",
+          "type": "string"
+        },
+        "clause_text_ref": {
+          "$ref": "#/$defs/ClauseTextRef"
+        },
+        "evidence_artifacts": {
+          "items": {
+            "$ref": "#/$defs/EvidenceArtifactRef"
+          },
+          "title": "Evidence Artifacts",
+          "type": "array"
+        },
+        "limitations": {
+          "minLength": 1,
+          "title": "Limitations",
+          "type": "string"
+        },
+        "platform_response": {
+          "title": "Platform Response",
+          "type": "string"
+        }
+      },
+      "required": [
+        "clause",
+        "clause_text_ref",
+        "platform_response",
+        "limitations"
+      ],
+      "title": "AnnexIVClauseMapping",
+      "type": "object"
+    },
+    "Artefact": {
+      "additionalProperties": false,
+      "description": "A content-addressed artefact the pack references rather than inlines\n(§5.4 ``artefacts``: shap-report, scenario-coverage-map, telemetry-archive,\ntail-probability-proof, ...).",
+      "properties": {
+        "cid": {
+          "title": "Cid",
+          "type": "string"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "cid"
+      ],
+      "title": "Artefact",
+      "type": "object"
+    },
+    "CRAAnnexIClauseMapping": {
+      "additionalProperties": false,
+      "description": "One CRA Annex I clause mapping (Regulation (EU) 2024/2847; CELEX\n32024R2847). BETA fork.\n\nProduced by the ``map_part1_property`` / ``map_part2_process`` functions in\n:mod:`certanix.evidence.cra_mapping`. Mirrors :class:`AnnexIVClauseMapping`\nand adds the :class:`CRASource` ``source`` field so every clause states,\nmachine-readably, whether its evidence is Certanix-generated or an ingested\nthird-party artefact. ``limitations`` states honestly what is record-only\nversus platform-tested and must never be empty.",
+      "properties": {
+        "clause": {
+          "title": "Clause",
+          "type": "string"
+        },
+        "clause_text_ref": {
+          "$ref": "#/$defs/ClauseTextRef"
+        },
+        "evidence_artifacts": {
+          "items": {
+            "$ref": "#/$defs/EvidenceArtifactRef"
+          },
+          "title": "Evidence Artifacts",
+          "type": "array"
+        },
+        "limitations": {
+          "minLength": 1,
+          "title": "Limitations",
+          "type": "string"
+        },
+        "platform_response": {
+          "title": "Platform Response",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/CRASource"
+        }
+      },
+      "required": [
+        "clause",
+        "clause_text_ref",
+        "platform_response",
+        "source",
+        "limitations"
+      ],
+      "title": "CRAAnnexIClauseMapping",
+      "type": "object"
+    },
+    "CRASource": {
+      "additionalProperties": false,
+      "description": "Provenance class of the evidence backing a CRA Annex I clause mapping.\n\n``kind`` is the load-bearing honesty flag (BETA fork):\n\n* ``\"certanix-generated\"`` — the evidence is produced by the platform itself\n  (``simulation`` telemetry / verdicts, evidence-chain ``integrity``, or\n  security-relevant ``telemetry``).\n* ``\"ingested\"`` — the evidence is a THIRD-PARTY artefact (an SBOM, a CVE /\n  vulnerability scan, a configuration attestation) that Certanix only\n  content-addresses and signs. It does NOT imply Certanix ran the underlying\n  scan, build or test.\n\n``origin`` names the concrete producer within that class — for ingested\nevidence it is the third-party tool/artefact kind (``sbom``, ``cve-scan``,\n``config-attestation``), so a reader can see exactly what Certanix did and\ndid not generate.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "certanix-generated",
+            "ingested"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "origin": {
+          "minLength": 1,
+          "title": "Origin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "origin"
+      ],
+      "title": "CRASource",
+      "type": "object"
+    },
+    "CampaignSummary": {
+      "additionalProperties": false,
+      "description": "Aggregate description and headline results of the campaign that produced\nthe pack (§5.4 ``campaign`` + ``results`` blocks).\n\nExecution counters describe the run; the score fields are the platform's\nheadline assurance metrics. Per-scenario detail lives in\n:class:`ScenarioResult`.",
+      "properties": {
+        "adversarial_robustness_score": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adversarial Robustness Score"
+        },
+        "assurance_target": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assurance Target"
+        },
+        "campaign_id": {
+          "title": "Campaign Id",
+          "type": "string"
+        },
+        "dataset_diversity_score": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dataset Diversity Score"
+        },
+        "dataset_diversity_uplift": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dataset Diversity Uplift"
+        },
+        "environments_per_scenario": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Environments Per Scenario",
+          "type": "integer"
+        },
+        "explainability_coverage": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Explainability Coverage"
+        },
+        "scenario_pass_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scenario Pass Rate"
+        },
+        "scenarios_executed": {
+          "minimum": 0,
+          "title": "Scenarios Executed",
+          "type": "integer"
+        },
+        "tail_probability_estimate": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tail Probability Estimate"
+        },
+        "total_simulation_hours": {
+          "default": 0.0,
+          "minimum": 0.0,
+          "title": "Total Simulation Hours",
+          "type": "number"
+        }
+      },
+      "required": [
+        "campaign_id",
+        "scenarios_executed"
+      ],
+      "title": "CampaignSummary",
+      "type": "object"
+    },
+    "ClauseTextRef": {
+      "additionalProperties": false,
+      "description": "Reference pointing a clause mapping back to its sources.\n\n``file`` is an anchor into the single source of truth\n(``references/ai-act-annex-iv.md#clause-...``); ``legal`` is the citation\ninto the Regulation itself. The mapping functions take clause IDs and\nwording cues from the file, never from memory.",
+      "properties": {
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "legal": {
+          "title": "Legal",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file",
+        "legal"
+      ],
+      "title": "ClauseTextRef",
+      "type": "object"
+    },
+    "ComplianceMapping": {
+      "additionalProperties": false,
+      "description": "Links platform-produced artefacts to specific regulatory clauses\n(§5.5, §9.3-§9.5).\n\n``ai_act_annex_iv`` is the legal target: a mapping from EU AI Act Annex IV\nclause ID (e.g. ``\"2(e)\"``, ``\"3\"``) to a reference for the artefact that\nsatisfies it (a CID, URI, or artefact id). ``easa_l2_ml`` mirrors this for\nthe EASA Concept Paper L1/L2 concerns; ``do_178c`` carries the DAL claim.",
+      "properties": {
+        "ai_act_annex_iv": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Ai Act Annex Iv",
+          "type": "object"
+        },
+        "annex_iv_clauses": {
+          "items": {
+            "$ref": "#/$defs/AnnexIVClauseMapping"
+          },
+          "title": "Annex Iv Clauses",
+          "type": "array"
+        },
+        "cra_annex_i_clauses": {
+          "items": {
+            "$ref": "#/$defs/CRAAnnexIClauseMapping"
+          },
+          "title": "Cra Annex I Clauses",
+          "type": "array"
+        },
+        "do_178c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DO178CMapping"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "easa_l2_ml": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Easa L2 Ml",
+          "type": "object"
+        }
+      },
+      "title": "ComplianceMapping",
+      "type": "object"
+    },
+    "DO178CMapping": {
+      "additionalProperties": false,
+      "description": "DO-178C / ED-12C coverage claim (§9.5). DAL D realistically, DAL C\naspirationally; DAL A/B are explicitly out of scope.",
+      "properties": {
+        "achieved_dal": {
+          "title": "Achieved Dal",
+          "type": "string"
+        },
+        "limitations": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Limitations"
+        }
+      },
+      "required": [
+        "achieved_dal"
+      ],
+      "title": "DO178CMapping",
+      "type": "object"
+    },
+    "EvidenceArtifactRef": {
+      "additionalProperties": false,
+      "description": "An artefact a clause mapping cites: an artefact ``type`` plus the\ncontent-addressed ``content_id`` (a CID, hash, or artefact id).",
+      "properties": {
+        "content_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Content Id"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "EvidenceArtifactRef",
+      "type": "object"
+    },
+    "IngestedArtifact": {
+      "additionalProperties": false,
+      "description": "A THIRD-PARTY security artefact ingested and signed into the pack (v1.2).\n\nNOT Certanix-generated: an SBOM (e.g. CycloneDX from syft) or a CVE scan\n(e.g. grype) produced by a standard external tool. Certanix loads it\n(:mod:`certanix.evidence.ingest`), content-hashes it through the ONE canonical\nscheme and EMBEDS the full ``document`` so the signature covers the exact\nbytes assessed — a notified body can re-hash the embedded document and confirm\nit matches ``content_hash``, both inside the signed pack.\n\n``source`` is always ``\"ingested:<tool>\"`` — the load-bearing honesty flag that\nkeeps these artefacts from ever reading as platform-generated evidence.\n``cra_clauses`` records which CRA Annex I BUILD-scope clauses the artefact\nsupports (SBOM -> ``II(1)``; CVE scan -> ``I(1)`` and ``II(3)``).",
+      "properties": {
+        "artifact_type": {
+          "enum": [
+            "sbom",
+            "cve-scan"
+          ],
+          "title": "Artifact Type",
+          "type": "string"
+        },
+        "content_hash": {
+          "minLength": 1,
+          "title": "Content Hash",
+          "type": "string"
+        },
+        "cra_clauses": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Cra Clauses",
+          "type": "array"
+        },
+        "document": {
+          "additionalProperties": true,
+          "title": "Document",
+          "type": "object"
+        },
+        "format": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Format"
+        },
+        "hash_algorithm": {
+          "default": "sha256",
+          "title": "Hash Algorithm",
+          "type": "string"
+        },
+        "source": {
+          "pattern": "^ingested:.+",
+          "title": "Source",
+          "type": "string"
+        },
+        "summary": {
+          "additionalProperties": true,
+          "title": "Summary",
+          "type": "object"
+        },
+        "tool": {
+          "minLength": 1,
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_type",
+        "tool",
+        "source",
+        "content_hash"
+      ],
+      "title": "IngestedArtifact",
+      "type": "object"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "description": "The full provenance chain bound into the signature (§5.4 ``provenance``,\n§9.6: platform version, every component version, every seed, every quantum\njob id, container image hashes).",
+      "properties": {
+        "component_versions": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Component Versions",
+          "type": "object"
+        },
+        "platform_version": {
+          "title": "Platform Version",
+          "type": "string"
+        },
+        "quantum_beat": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantumBeat"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "quantum_job_devices": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Quantum Job Devices",
+          "type": "array"
+        },
+        "quantum_job_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Quantum Job Ids",
+          "type": "array"
+        },
+        "ran_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ran At"
+        },
+        "ran_on": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ran On"
+        },
+        "selection_solver_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "analog-rydberg",
+                "qaoa-gate-superconducting",
+                "tn-emulation",
+                "sa-classical"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selection Solver Class"
+        },
+        "vehicle": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Vehicle"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "platform_version"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "QuantumBeat": {
+      "additionalProperties": false,
+      "description": "The small-instance live quantum *beat* attached to a pack (v1.4).\n\nThe sovereign QPU (or cloud-emulator) submission that ran ALONGSIDE the\nfull-scale classical selection — never the full-scale run itself, whose\nprovenance is :attr:`Provenance.quantum_job_ids` / ``quantum_job_devices``.\nRecorded as a structured fact so the Annex-IV 2(d) narrative is derived FROM it\n(prose and schema cannot drift). ``backend`` is the quantum-execution backend\n(``\"scaleway\"`` / ``\"pasqal_cloud\"``); ``executed_at`` is when the job ran.",
+      "properties": {
+        "backend": {
+          "title": "Backend",
+          "type": "string"
+        },
+        "device": {
+          "title": "Device",
+          "type": "string"
+        },
+        "executed_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Executed At"
+        },
+        "job_id": {
+          "title": "Job Id",
+          "type": "string"
+        },
+        "k": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "K"
+        },
+        "n_candidates": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N Candidates"
+        },
+        "provider": {
+          "anyOf": [
+            {
+              "enum": [
+                "pasqal",
+                "iqm"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider"
+        },
+        "shots": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Shots"
+        },
+        "solver_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "analog-rydberg",
+                "qaoa-gate-superconducting",
+                "tn-emulation",
+                "sa-classical"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Solver Class"
+        }
+      },
+      "required": [
+        "job_id",
+        "device",
+        "backend"
+      ],
+      "title": "QuantumBeat",
+      "type": "object"
+    },
+    "SHAPRecord": {
+      "additionalProperties": false,
+      "description": "A per-decision SHAP explainability record (§8.6 Explainability Pipeline,\n§9.3 Annex IV clause 3 \"per-decision SHAP records\").\n\n``feature_attributions`` maps an input feature name to its SHAP value; the\nadditive explanation reconstructs the prediction as\n``base_value + sum(feature_attributions.values())``.\n\n``limitations`` defaults to :data:`SHAP_LIMITATIONS_DEFAULT` and is never\nempty — it states the provenance chain honestly so an attribution can never\nbe read as evidence that a decision was *correct*, only that a feature\n*influenced* the model's (rule-imitating) output.",
+      "properties": {
+        "ai_policy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ai Policy"
+        },
+        "base_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Value"
+        },
+        "decision_id": {
+          "title": "Decision Id",
+          "type": "string"
+        },
+        "feature_attributions": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Feature Attributions",
+          "type": "object"
+        },
+        "limitations": {
+          "default": "attributions explain a PerceptionMLP trained to its recorded accuracy against a transparent hand-coded rule (rule_label); they explain feature influence on the MLP's imitation, not the correctness of a learned policy; the mission is flown by the kinematic controller, with perception as an explainability observer. Learned-policy attribution and in-loop perception control are MVP scope.",
+          "minLength": 1,
+          "title": "Limitations",
+          "type": "string"
+        },
+        "prediction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prediction"
+        },
+        "scenario_id": {
+          "title": "Scenario Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "decision_id"
+      ],
+      "title": "SHAPRecord",
+      "type": "object"
+    },
+    "ScenarioResult": {
+      "additionalProperties": false,
+      "description": "Outcome of one scenario across its environments (§5.2 Scenario,\n§5.3 Telemetry Record, §9.5 DAL-D requirements-based test coverage).\n\n``deterministic_hash`` is the content hash that makes the run replayable\n(Spec Sheet §5.3 ``deterministic_hash``).",
+      "properties": {
+        "anomalies": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Anomalies",
+          "type": "array"
+        },
+        "deterministic_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Deterministic Hash"
+        },
+        "environments_executed": {
+          "default": 1,
+          "minimum": 0,
+          "title": "Environments Executed",
+          "type": "integer"
+        },
+        "metrics": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Metrics",
+          "type": "object"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "scenario_id": {
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "seed": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seed"
+        },
+        "status": {
+          "$ref": "#/$defs/ScenarioStatus"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "status"
+      ],
+      "title": "ScenarioResult",
+      "type": "object"
+    },
+    "ScenarioStatus": {
+      "description": "Pass/fail outcome of a single certification scenario (§9.5 anomaly\ncatalogue, requirements-based test coverage at the scenario level).",
+      "enum": [
+        "passed",
+        "failed",
+        "error"
+      ],
+      "title": "ScenarioStatus",
+      "type": "string"
+    },
+    "Signature": {
+      "additionalProperties": false,
+      "description": "Cosign signature over the canonical pack (§9.6). ECDSA-P384 via an\nHSM-backed key (YubiHSM in production, Vault PKI in staging).",
+      "properties": {
+        "algorithm": {
+          "default": "ECDSA-P384",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "key_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Key Source"
+        },
+        "signature_b64": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signature B64"
+        },
+        "signer_dn": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signer Dn"
+        }
+      },
+      "title": "Signature",
+      "type": "object"
+    },
+    "Subject": {
+      "additionalProperties": false,
+      "description": "What was certified: tenant, device manifest, and the AI policy under\ntest (§5.4 ``subject`` block).",
+      "properties": {
+        "ai_policy_uri": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ai Policy Uri"
+        },
+        "device_manifest": {
+          "title": "Device Manifest",
+          "type": "string"
+        },
+        "policy_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Policy Hash"
+        },
+        "tenant": {
+          "title": "Tenant",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tenant",
+        "device_manifest"
+      ],
+      "title": "Subject",
+      "type": "object"
+    },
+    "Vehicle": {
+      "additionalProperties": false,
+      "description": "The certified vehicle's identity, bound into the signed provenance (v1.5).\n\nA distinct additive field that BOTH vehicle classes populate — the platform\nclaim is that two packs differ in exactly this field. It is the SINGLE source\nthe Annex-IV general description reads, so prose and schema cannot drift.\n``frame_type`` is the raw manifest value (``\"quadruped\"`` / ``\"vtol\"`` / …), the\nsigned source of truth; ``vehicle_class`` is the coarse ``\"aerial\"`` / ``\"ground\"``\nfrom the FIXED manifest-layer mapping (never UI render logic);\n``manifest_hash`` is the SHA-256 of the canonical manifest; ``source`` is\n``\"ingested\"`` (customer-declared).",
+      "properties": {
+        "frame_type": {
+          "title": "Frame Type",
+          "type": "string"
+        },
+        "intended_purpose": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Intended Purpose"
+        },
+        "manifest_hash": {
+          "title": "Manifest Hash",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "source": {
+          "default": "ingested",
+          "title": "Source",
+          "type": "string"
+        },
+        "vehicle_class": {
+          "title": "Vehicle Class",
+          "type": "string"
+        }
+      },
+      "required": [
+        "vehicle_class",
+        "frame_type",
+        "model",
+        "manifest_hash"
+      ],
+      "title": "Vehicle",
+      "type": "object"
+    }
+  },
+  "$id": "https://schema.certanix.eu/v1/pack-1.7.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "The evidence-pack shape at schemaVersion 1.7. FROZEN: this file is never edited. A correction is a new version, because packs signed against this shape must keep validating against these exact bytes. Generated from the platform's pydantic models and the OMIT_WHEN_EMPTY additive-schema contract in certanix/verify_core.py. Structural validity only: it cannot express the signature, the canonicalisation rules, or the capability gate.",
+  "properties": {
+    "@context": {
+      "default": "https://schema.certanix.eu/v1/evidence-context.jsonld",
+      "title": "@Context",
+      "type": "string"
+    },
+    "@type": {
+      "default": "EvidencePack",
+      "title": "@Type",
+      "type": "string"
+    },
+    "artefacts": {
+      "items": {
+        "$ref": "#/$defs/Artefact"
+      },
+      "title": "Artefacts",
+      "type": "array"
+    },
+    "campaign": {
+      "$ref": "#/$defs/CampaignSummary"
+    },
+    "compliance_mappings": {
+      "$ref": "#/$defs/ComplianceMapping"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "ingested_artifacts": {
+      "items": {
+        "$ref": "#/$defs/IngestedArtifact"
+      },
+      "title": "Ingested Artifacts",
+      "type": "array"
+    },
+    "provenance": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Provenance"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "scenario_results": {
+      "items": {
+        "$ref": "#/$defs/ScenarioResult"
+      },
+      "title": "Scenario Results",
+      "type": "array"
+    },
+    "schemaVersion": {
+      "const": "1.7",
+      "type": "string"
+    },
+    "shap_records": {
+      "items": {
+        "$ref": "#/$defs/SHAPRecord"
+      },
+      "title": "Shap Records",
+      "type": "array"
+    },
+    "signature": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Signature"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "subject": {
+      "$ref": "#/$defs/Subject"
+    }
+  },
+  "required": [
+    "id",
+    "subject",
+    "campaign"
+  ],
+  "title": "Certanix evidence pack, schema 1.7",
+  "type": "object"
+}

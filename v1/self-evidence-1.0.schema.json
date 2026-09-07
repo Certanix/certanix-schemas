@@ -1,0 +1,353 @@
+{
+  "$defs": {
+    "ConformanceDeclaration": {
+      "additionalProperties": false,
+      "description": "The verification conformance corpus's result and shape.",
+      "properties": {
+        "cases": {
+          "minimum": 0,
+          "title": "Cases",
+          "type": "integer"
+        },
+        "error_classes_exercised": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Error Classes Exercised",
+          "type": "array"
+        },
+        "families": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Families",
+          "type": "array"
+        },
+        "manifest_sha256": {
+          "title": "Manifest Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cases",
+        "manifest_sha256"
+      ],
+      "title": "ConformanceDeclaration",
+      "type": "object"
+    },
+    "DeclaredEvidence": {
+      "additionalProperties": false,
+      "description": "A third-party tool's output, content-hashed and named — not our finding.\n\n``source`` is always ``declared:<tool>``, mirroring the ``ingested:<tool>`` flag on\ncustomer packs: it is the honesty marker that keeps a scanner's output from ever\nreading as a platform-generated claim.",
+      "properties": {
+        "content_hash": {
+          "minLength": 1,
+          "title": "Content Hash",
+          "type": "string"
+        },
+        "document": {
+          "additionalProperties": true,
+          "title": "Document",
+          "type": "object"
+        },
+        "format": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Format"
+        },
+        "kind": {
+          "enum": [
+            "sbom",
+            "cve-scan"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "source": {
+          "pattern": "^declared:.+",
+          "title": "Source",
+          "type": "string"
+        },
+        "summary": {
+          "additionalProperties": true,
+          "title": "Summary",
+          "type": "object"
+        },
+        "tool": {
+          "minLength": 1,
+          "title": "Tool",
+          "type": "string"
+        },
+        "tool_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Version"
+        }
+      },
+      "required": [
+        "kind",
+        "tool",
+        "source",
+        "content_hash"
+      ],
+      "title": "DeclaredEvidence",
+      "type": "object"
+    },
+    "DeterminismDeclaration": {
+      "additionalProperties": false,
+      "description": "The byte-determinism manifest, carried verbatim with its scope.",
+      "properties": {
+        "declared_nondeterministic": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Declared Nondeterministic",
+          "type": "array"
+        },
+        "golden_manifest": {
+          "title": "Golden Manifest",
+          "type": "string"
+        },
+        "inputs": {
+          "additionalProperties": true,
+          "title": "Inputs",
+          "type": "object"
+        },
+        "scope_limits": {
+          "title": "Scope Limits",
+          "type": "string"
+        },
+        "stages": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Stages",
+          "type": "object"
+        }
+      },
+      "required": [
+        "golden_manifest",
+        "scope_limits"
+      ],
+      "title": "DeterminismDeclaration",
+      "type": "object"
+    },
+    "Signature": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "default": "ECDSA-P256",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "key_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Key Source"
+        },
+        "signature_b64": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signature B64"
+        }
+      },
+      "title": "Signature",
+      "type": "object"
+    },
+    "TestAttestation": {
+      "additionalProperties": false,
+      "description": "A test suite reporting its own run.\n\nDeliberately called an attestation, not a result: nobody independent observed it.\n``command`` is recorded so a reader can re-run the same thing and compare rather\nthan take the numbers on faith — which is the only thing that makes a\nself-attestation worth anything.",
+      "properties": {
+        "command": {
+          "title": "Command",
+          "type": "string"
+        },
+        "exit_code": {
+          "title": "Exit Code",
+          "type": "integer"
+        },
+        "failed": {
+          "minimum": 0,
+          "title": "Failed",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "passed": {
+          "minimum": 0,
+          "title": "Passed",
+          "type": "integer"
+        },
+        "skip_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Skip Reason"
+        },
+        "skipped": {
+          "minimum": 0,
+          "title": "Skipped",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "command",
+        "passed",
+        "failed",
+        "skipped",
+        "exit_code"
+      ],
+      "title": "TestAttestation",
+      "type": "object"
+    }
+  },
+  "$id": "https://schema.certanix.eu/v1/self-evidence-1.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A STANDALONE signed root with its own `schema_version` line — not a field of an evidence pack, so the pack schema does not move when this one does. FROZEN: a correction is a new version. Structural validity only.",
+  "properties": {
+    "artifact_type": {
+      "const": "self-evidence",
+      "default": "self-evidence",
+      "title": "Artifact Type",
+      "type": "string"
+    },
+    "attested": {
+      "items": {
+        "$ref": "#/$defs/TestAttestation"
+      },
+      "title": "Attested",
+      "type": "array"
+    },
+    "conformance": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ConformanceDeclaration"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "declared": {
+      "items": {
+        "$ref": "#/$defs/DeclaredEvidence"
+      },
+      "title": "Declared",
+      "type": "array"
+    },
+    "determinism": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DeterminismDeclaration"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "evidence_classes": {
+      "items": {
+        "enum": [
+          "declared",
+          "attested"
+        ],
+        "type": "string"
+      },
+      "title": "Evidence Classes",
+      "type": "array"
+    },
+    "framing": {
+      "default": "Signed evidence ABOUT the Certanix platform: its software bill of materials, its test-suite result, its byte-determinism manifest and its verification-conformance result. Every item is DECLARED (produced by a named third-party tool and content-hashed here) or ATTESTED (a test suite reporting its own run). This artifact contains NO simulation verdicts, no system-under-test, and no compliance determination. It is NOT a certification evidence pack and must not be read as one: Certanix has not certified Certanix. A separate artifact type is used so the two can never be confused by shape.",
+      "title": "Framing",
+      "type": "string"
+    },
+    "generated_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Generated At"
+    },
+    "platform_commit": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Platform Commit"
+    },
+    "platform_version": {
+      "title": "Platform Version",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "signature": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Signature"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "platform_version"
+  ],
+  "title": "Certanix self evidence, schema 1.0",
+  "type": "object"
+}

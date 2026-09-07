@@ -1,0 +1,433 @@
+{
+  "$defs": {
+    "BatteryIdentity": {
+      "additionalProperties": false,
+      "description": "What makes two campaigns the same measurement, twice.\n\nRecorded on both sides and compared field by field. A mismatch in any of these is\nnot a difference in the system under test — it is a difference in the question\nasked, and the two results are not on the same axis.",
+      "properties": {
+        "frame_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Frame Type"
+        },
+        "scenario_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Scenario Ids",
+          "type": "array"
+        },
+        "scenarios_executed": {
+          "minimum": 0,
+          "title": "Scenarios Executed",
+          "type": "integer"
+        },
+        "seeds": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Seeds",
+          "type": "array"
+        },
+        "vehicle_model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vehicle Model"
+        }
+      },
+      "required": [
+        "scenario_ids",
+        "seeds",
+        "scenarios_executed"
+      ],
+      "title": "BatteryIdentity",
+      "type": "object"
+    },
+    "PackRef": {
+      "additionalProperties": false,
+      "description": "One input, identified by what it IS rather than by where it was found.\n\n``canonical_sha256`` is the digest of the bytes that were signed, so a delta names\nits inputs unforgeably: you can hold a pack and prove it is the one that was\ncompared, or prove it is not.",
+      "properties": {
+        "canonical_sha256": {
+          "title": "Canonical Sha256",
+          "type": "string"
+        },
+        "pack_id": {
+          "title": "Pack Id",
+          "type": "string"
+        },
+        "platform_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Platform Version"
+        },
+        "ran_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ran At"
+        },
+        "scenarios_executed": {
+          "minimum": 0,
+          "title": "Scenarios Executed",
+          "type": "integer"
+        },
+        "schema_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Schema Version"
+        },
+        "solver_class": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Solver Class"
+        }
+      },
+      "required": [
+        "pack_id",
+        "canonical_sha256",
+        "scenarios_executed"
+      ],
+      "title": "PackRef",
+      "type": "object"
+    },
+    "RateDelta": {
+      "additionalProperties": false,
+      "description": "A pass-rate change with a Wilson interval on each side.\n\nThe interval is on each rate, not on the difference: a difference-of-proportions\ninterval is a different statistic with different assumptions, and quoting one we\ndid not compute would be exactly the sort of borrowed rigour this platform exists\nto avoid.",
+      "properties": {
+        "baseline_ci95": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Ci95"
+        },
+        "baseline_passed": {
+          "minimum": 0,
+          "title": "Baseline Passed",
+          "type": "integer"
+        },
+        "baseline_rate": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Rate"
+        },
+        "baseline_total": {
+          "minimum": 0,
+          "title": "Baseline Total",
+          "type": "integer"
+        },
+        "candidate_ci95": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Ci95"
+        },
+        "candidate_passed": {
+          "minimum": 0,
+          "title": "Candidate Passed",
+          "type": "integer"
+        },
+        "candidate_rate": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Rate"
+        },
+        "candidate_total": {
+          "minimum": 0,
+          "title": "Candidate Total",
+          "type": "integer"
+        },
+        "delta": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delta"
+        }
+      },
+      "required": [
+        "baseline_passed",
+        "baseline_total",
+        "candidate_passed",
+        "candidate_total"
+      ],
+      "title": "RateDelta",
+      "type": "object"
+    },
+    "Signature": {
+      "additionalProperties": false,
+      "description": "Detached cosign signature over the artifact's canonical bytes.",
+      "properties": {
+        "algorithm": {
+          "default": "ECDSA-P256",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "key_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Key Source"
+        },
+        "signature_b64": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signature B64"
+        }
+      },
+      "title": "Signature",
+      "type": "object"
+    },
+    "Transition": {
+      "additionalProperties": false,
+      "description": "One scenario's verdict, before and after.",
+      "properties": {
+        "baseline_status": {
+          "title": "Baseline Status",
+          "type": "string"
+        },
+        "candidate_status": {
+          "title": "Candidate Status",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "fixed",
+            "broken",
+            "unchanged",
+            "changed"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "scenario_id": {
+          "title": "Scenario Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "baseline_status",
+        "candidate_status",
+        "kind"
+      ],
+      "title": "Transition",
+      "type": "object"
+    }
+  },
+  "$id": "https://schema.certanix.eu/v1/delta-report-1.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A STANDALONE signed root with its own `schema_version` line — not a field of an evidence pack, so the pack schema does not move when this one does. FROZEN: a correction is a new version. Structural validity only.",
+  "properties": {
+    "artifact_type": {
+      "const": "delta-report",
+      "default": "delta-report",
+      "title": "Artifact Type",
+      "type": "string"
+    },
+    "baseline": {
+      "$ref": "#/$defs/PackRef"
+    },
+    "battery": {
+      "$ref": "#/$defs/BatteryIdentity"
+    },
+    "candidate": {
+      "$ref": "#/$defs/PackRef"
+    },
+    "counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Counts",
+      "type": "object"
+    },
+    "generated_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Generated At"
+    },
+    "pass_rate": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RateDelta"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "platform_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Platform Version"
+    },
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "schema_version_pair": {
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "title": "Schema Version Pair",
+      "type": "array"
+    },
+    "signature": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Signature"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "solver_class_pair": {
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "title": "Solver Class Pair",
+      "type": "array"
+    },
+    "subject": {
+      "title": "Subject",
+      "type": "string"
+    },
+    "transitions": {
+      "items": {
+        "$ref": "#/$defs/Transition"
+      },
+      "title": "Transitions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "subject",
+    "baseline",
+    "candidate",
+    "battery"
+  ],
+  "title": "Certanix delta report, schema 1.0",
+  "type": "object"
+}
