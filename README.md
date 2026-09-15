@@ -28,7 +28,7 @@ proof.
 
 Every published path is **write-once**. `v1/` holds the vocabulary and the schema shapes
 as published; those bytes never change again. A correction is therefore not an edit — it
-is a **new path**, a new `pack-1.8`, or a whole new `v2/` prefix minted alongside, with
+is a **new path**, a new `pack-1.9`, or a whole new `v2/` prefix minted alongside, with
 `v1/` left standing forever. That is the same sign-forward rule the evidence itself
 follows: you do not amend a signed record, you sign a superseding one and keep both.
 
@@ -51,10 +51,14 @@ published digest.
 
 ## What is published, and what is deliberately not
 
-Pack schema versions `1.2`, `1.6` and `1.7`, plus the two standalone `1.0` roots — the
-versions a live signed artifact actually references. The verifier knows nine values
-(`None`, `1.0`–`1.7`); the rest are not published, because writing a schema for a pack
-version that no artifact uses would be inventing a record.
+Pack schema versions `1.2`, `1.6` and `1.7`, the versions a live signed artifact actually
+references, and the standalone roots `delta-refusal-1.0`, `delta-report-1.0` and
+`self-evidence-1.0`. Pack `1.8` is the one stated exception: it is the version the
+platform emits today, so its schema describes real output rather than inventing a record,
+and it is published before any committed signed artifact declares it so that a reader can
+validate a pack they generate. The verifier knows ten values (`None`, `1.0`, `1.1`, `1.2`,
+`1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`); the rest are not published, because writing a
+schema for a pack version that no artifact uses would be inventing a record.
 
 This is also the schema-migration answer in the form a certification body asks for it:
 *the pack you accepted last year still validates, here is the schema it validates against,
