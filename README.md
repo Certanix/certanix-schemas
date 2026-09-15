@@ -67,10 +67,11 @@ and that file has not changed since the day it was published.*
 | `manifest/v1/device-manifest.schema.json` | https://schema.certanix.eu/manifest/v1/device-manifest.schema.json | `93ffd1da02a9d917…` |
 | `v1/delta-refusal-1.0.schema.json` | https://schema.certanix.eu/v1/delta-refusal-1.0.schema.json | `4dcb66fdeb2006b6…` |
 | `v1/delta-report-1.0.schema.json` | https://schema.certanix.eu/v1/delta-report-1.0.schema.json | `9c7e5cf9aeb2eab3…` |
-| `v1/evidence-context.jsonld` | https://schema.certanix.eu/v1/evidence-context.jsonld | `e82026e79cc0ad6f…` |
+| `v1/evidence-context.jsonld` | https://schema.certanix.eu/v1/evidence-context.jsonld | `ba601c6f7fff74de…` |
 | `v1/pack-1.2.schema.json` | https://schema.certanix.eu/v1/pack-1.2.schema.json | `b02315b9047eacd0…` |
 | `v1/pack-1.6.schema.json` | https://schema.certanix.eu/v1/pack-1.6.schema.json | `1fe2a64165dc70c2…` |
 | `v1/pack-1.7.schema.json` | https://schema.certanix.eu/v1/pack-1.7.schema.json | `02a027e3f9b876f6…` |
+| `v1/pack-1.8.schema.json` | https://schema.certanix.eu/v1/pack-1.8.schema.json | `8225d03c0aedd6cd…` |
 | `v1/self-evidence-1.0.schema.json` | https://schema.certanix.eu/v1/self-evidence-1.0.schema.json | `d3880e9d602ef8c4…` |
 
 Two more files sit at the root and are hosting, not schema. `CNAME` is what makes the site
@@ -81,5 +82,6 @@ served verbatim; nothing here starts with an underscore today, and the file is h
 that the day something does, a URI frozen in signed bytes does not begin returning 404.
 
 ---
-Internal — Certanix. Structural validity only: a document that satisfies a schema here is
+This tree is the published namespace referenced inside the signed bytes of Certanix
+evidence packs. Structural validity only: a document that satisfies a schema here is
 well-shaped, not signed, not verified, and not gate-admitted.

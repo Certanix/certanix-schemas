@@ -60,6 +60,7 @@
     "n_candidates": "cert:nCandidates",
     "name": "cert:name",
     "origin": "cert:origin",
+    "platform_family": "cert:platformFamily",
     "platform_response": "cert:platformResponse",
     "platform_version": "cert:platformVersion",
     "policy_hash": "cert:policyHash",

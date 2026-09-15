@@ -8,6 +8,13 @@ a new path, never a new digest at an old one.
 
 Newest first.
 
+## 2026-09-15 — v1/pack-1.8.schema.json, v1/evidence-context.jsonld (additive)
+
+| File | sha256 |
+|---|---|
+| `v1/evidence-context.jsonld` | `ba601c6f7fff74dee01c54399bba6f24c67beba157217d372c85bbe0a2340cd5` |
+| `v1/pack-1.8.schema.json` | `8225d03c0aedd6cdb850727014d97540457ca4313a3c48c7c9d4ba52cbff6b42` |
+
 ## 2026-09-07 — .nojekyll, CNAME
 
 | File | sha256 |
