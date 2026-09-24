@@ -28,7 +28,7 @@ proof.
 
 Every published path is **write-once**. `v1/` holds the vocabulary and the schema shapes
 as published; those bytes never change again. A correction is therefore not an edit — it
-is a **new path**, a new `pack-1.9`, or a whole new `v2/` prefix minted alongside, with
+is a **new path**, a new `pack-1.10`, or a whole new `v2/` prefix minted alongside, with
 `v1/` left standing forever. That is the same sign-forward rule the evidence itself
 follows: you do not amend a signed record, you sign a superseding one and keep both.
 
@@ -53,11 +53,13 @@ published digest.
 
 Pack schema versions `1.2`, `1.6` and `1.7`, the versions a live signed artifact actually
 references, and the standalone roots `delta-refusal-1.0`, `delta-report-1.0` and
-`self-evidence-1.0`. Pack `1.8` is the one stated exception: it is the version the
-platform emits today, so its schema describes real output rather than inventing a record,
-and it is published before any committed signed artifact declares it so that a reader can
-validate a pack they generate. The verifier knows ten values (`None`, `1.0`, `1.1`, `1.2`,
-`1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`); the rest are not published, because writing a
+`self-evidence-1.0`. Pack `1.9` is published because it is the version the platform emits
+today, so its schema describes real output rather than inventing a record, and it is
+published before any committed signed artifact declares it so that a reader can validate a
+pack they generate. Pack `1.8` stayed published after the platform moved past it: it was
+published while current, and published bytes are write-once, so a superseded version is
+never withdrawn. The verifier knows eleven values (`None`, `1.0`, `1.1`, `1.2`, `1.3`,
+`1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `1.9`); the rest are not published, because writing a
 schema for a pack version that no artifact uses would be inventing a record.
 
 This is also the schema-migration answer in the form a certification body asks for it:
@@ -71,11 +73,12 @@ and that file has not changed since the day it was published.*
 | `manifest/v1/device-manifest.schema.json` | https://schema.certanix.eu/manifest/v1/device-manifest.schema.json | `93ffd1da02a9d917…` |
 | `v1/delta-refusal-1.0.schema.json` | https://schema.certanix.eu/v1/delta-refusal-1.0.schema.json | `4dcb66fdeb2006b6…` |
 | `v1/delta-report-1.0.schema.json` | https://schema.certanix.eu/v1/delta-report-1.0.schema.json | `9c7e5cf9aeb2eab3…` |
-| `v1/evidence-context.jsonld` | https://schema.certanix.eu/v1/evidence-context.jsonld | `ba601c6f7fff74de…` |
+| `v1/evidence-context.jsonld` | https://schema.certanix.eu/v1/evidence-context.jsonld | `05447b96fafedfad…` |
 | `v1/pack-1.2.schema.json` | https://schema.certanix.eu/v1/pack-1.2.schema.json | `b02315b9047eacd0…` |
 | `v1/pack-1.6.schema.json` | https://schema.certanix.eu/v1/pack-1.6.schema.json | `1fe2a64165dc70c2…` |
 | `v1/pack-1.7.schema.json` | https://schema.certanix.eu/v1/pack-1.7.schema.json | `02a027e3f9b876f6…` |
 | `v1/pack-1.8.schema.json` | https://schema.certanix.eu/v1/pack-1.8.schema.json | `8225d03c0aedd6cd…` |
+| `v1/pack-1.9.schema.json` | https://schema.certanix.eu/v1/pack-1.9.schema.json | `65c66d992faf20b0…` |
 | `v1/self-evidence-1.0.schema.json` | https://schema.certanix.eu/v1/self-evidence-1.0.schema.json | `d3880e9d602ef8c4…` |
 
 Two more files sit at the root and are hosting, not schema. `CNAME` is what makes the site
