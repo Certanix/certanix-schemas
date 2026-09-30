@@ -15,7 +15,7 @@ stale build, and *refuses* on any change to bytes that are already published.
 
 **A Certanix pack verifies locally, with no network, and this repository is not on the
 trust path.** The `@context` URI inside a pack is a *vocabulary lookup* for JSON-LD
-consumers — it is not dereferenced when a signature is checked. `certanix-verify`, the
+consumers; it is not dereferenced when a signature is checked. `certanix-verify`, the
 specimen `verify.py`, and the platform's own verifier all recompute the pack's canonical
 bytes and check the signature against a public key. None of them opens a socket.
 
@@ -27,7 +27,7 @@ proof.
 ## Versions are immutable, and the `/vN` scheme is how change happens
 
 Every published path is **write-once**. `v1/` holds the vocabulary and the schema shapes
-as published; those bytes never change again. A correction is therefore not an edit — it
+as published; those bytes never change again. A correction is therefore not an edit: it
 is a **new path**, a new `pack-1.11`, or a whole new `v2/` prefix minted alongside, with
 `v1/` left standing forever. That is the same sign-forward rule the evidence itself
 follows: you do not amend a signed record, you sign a superseding one and keep both.
@@ -51,17 +51,14 @@ published digest.
 
 ## What is published, and what is deliberately not
 
-Pack schema versions `1.2`, `1.6` and `1.7`, the versions a live signed artifact actually
-references, and the standalone roots `delta-refusal-1.0`, `delta-report-1.0` and
-`self-evidence-1.0`. Pack `1.10` is published because it is the version the platform emits
-today, so its schema describes real output rather than inventing a record, and it is
-published before any committed signed artifact declares it so that a reader can validate a
-pack they generate. Packs `1.8` and `1.9` stayed published after the platform moved past
-them: each was published while current, and published bytes are write-once, so a
-superseded version is never withdrawn. The verifier knows twelve values (`None`, `1.0`,
-`1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `1.9`, `1.10`); the rest are not
-published, because writing a schema for a pack version that no artifact uses would be
-inventing a record.
+Pack schema versions `1.2`, `1.6`, `1.7` and `1.10` are the versions live signed artifacts
+reference; `1.10` is also the version the platform emits today. The standalone roots
+`delta-refusal-1.0`, `delta-report-1.0` and `self-evidence-1.0` are published beside them.
+Packs `1.8` and `1.9` stayed published after the platform moved past them: each was
+published while current, and published bytes are write-once, so a superseded version is
+never withdrawn. The verifier knows twelve values (`None`, `1.0`, `1.1`, `1.2`, `1.3`,
+`1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `1.9`, `1.10`); the rest are not published, because
+writing a schema for a pack version that no artifact uses would be inventing a record.
 
 This is also the schema-migration answer in the form a certification body asks for it:
 *the pack you accepted last year still validates, here is the schema it validates against,
@@ -84,7 +81,7 @@ and that file has not changed since the day it was published.*
 | `v1/self-evidence-1.0.schema.json` | https://schema.certanix.eu/v1/self-evidence-1.0.schema.json | `d3880e9d602ef8c4…` |
 
 Two more files sit at the root and are hosting, not schema. `CNAME` is what makes the site
-answer on `schema.certanix.eu` — the host named in every pack's signed bytes — and it is
+answer on `schema.certanix.eu` (the host named in every pack's signed bytes), and it is
 frozen for a stronger reason than any schema is: a schema path can be superseded, a
 hostname already inside signed bytes cannot. `.nojekyll` disables Jekyll so the tree is
 served verbatim; nothing here starts with an underscore today, and the file is here so
