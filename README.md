@@ -51,18 +51,17 @@ published digest.
 
 ## What is published, and what is deliberately not
 
-Pack schema versions `1.2`, `1.6`, `1.7` and `1.10` are the versions live signed artifacts
-reference. Pack `1.11` is also published, because it is the version the platform emits
-from this release, so its schema describes real output rather than inventing a record. No
-committed signed artifact declares `1.11` yet: the first will be the packs re-issued under
-it. The standalone roots `delta-refusal-1.0`, `delta-report-1.0` and `self-evidence-1.0`
-are published beside them. Packs `1.8` and `1.9` stayed published after the platform moved
-past them: each was published while current, and published bytes are write-once, so a
-superseded version is never withdrawn. The verifier knows thirteen values (`None`, `1.0`,
-`1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `1.9`, `1.10`, `1.11`); the rest
-are not published, because writing a schema for a pack version that no artifact uses would
-be inventing a record. The device manifest has two published revisions:
-`manifest/v1/device-manifest.schema.json`, frozen, and
+Pack schema versions `1.2`, `1.6`, `1.7` and `1.11` are the versions current signed
+artifacts reference; `1.10` is referenced only by superseded signed artifacts, which stay
+published and still verify. Pack `1.11` is also the version the platform emits from this
+release. The standalone roots `delta-refusal-1.0`, `delta-report-1.0` and
+`self-evidence-1.0` are published beside them. Packs `1.8` and `1.9` stayed published
+after the platform moved past them: each was published while current, and published bytes
+are write-once, so a superseded version is never withdrawn. The verifier knows thirteen
+values (`None`, `1.0`, `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `1.9`,
+`1.10`, `1.11`); the rest are not published, because writing a schema for a pack version
+that no artifact uses would be inventing a record. The device manifest has two published
+revisions: `manifest/v1/device-manifest.schema.json`, frozen, and
 `manifest/v1/device-manifest-1.1.schema.json`, which adds the optional fields
 `arm_length_m`, `drive_type`, `inertia_kg_m2`, `rotor_layout`, `rotor_max_speed_rad_s`,
 `rotor_max_thrust_n`, `rotor_torque_ratio_m` and `vehicle_data`. The frozen v1 schema
