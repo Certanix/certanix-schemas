@@ -8,6 +8,13 @@ a new path, never a new digest at an old one.
 
 Newest first.
 
+## 2026-09-30: v1/pack-1.10.schema.json, v1/evidence-context.jsonld (additive)
+
+| File | sha256 |
+|---|---|
+| `v1/evidence-context.jsonld` | `b277285c61b3258408fb20debfcb62c31913a2f280fd2ec340ec3246c0a30853` |
+| `v1/pack-1.10.schema.json` | `047957f25548ea52789dd2b7b34dfeb601c9b090132b4776d414796149002c6a` |
+
 ## 2026-09-24: v1/pack-1.9.schema.json, v1/evidence-context.jsonld (additive)
 
 | File | sha256 |
