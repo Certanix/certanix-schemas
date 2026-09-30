@@ -41,6 +41,7 @@
     "device_manifest": "cert:deviceManifest",
     "do_178c": "cert:do178C",
     "document": "cert:document",
+    "drive_type": "cert:driveType",
     "easa_l2_ml": "cert:easaL2Ml",
     "engine": "cert:engine",
     "environments_executed": "cert:environmentsExecuted",
@@ -74,6 +75,7 @@
     "no_cruise_phase": "cert:noCruisePhase",
     "origin": "cert:origin",
     "outside_tolerance": "cert:outsideTolerance",
+    "payload_simulation": "cert:payloadSimulation",
     "platform_family": "cert:platformFamily",
     "platform_response": "cert:platformResponse",
     "platform_version": "cert:platformVersion",
@@ -115,12 +117,18 @@
     "tolerance_rel": "cert:toleranceRel",
     "tool": "cert:tool",
     "total_simulation_hours": "cert:totalSimulationHours",
+    "track_width_m": "cert:trackWidthM",
     "twin_fidelity": "cert:twinFidelity",
     "type": "cert:type",
     "vehicle": "cert:vehicle",
     "vehicle_class": "cert:vehicleClass",
+    "vehicle_data": "cert:vehicleData",
+    "vehicle_mass_kg": "cert:vehicleMassKg",
+    "vehicle_mass_ratio": "cert:vehicleMassRatio",
+    "wheel_count": "cert:wheelCount",
+    "wheel_radius_m": "cert:wheelRadiusM",
     "within_tolerance": "cert:withinTolerance",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-  "_comment": "The JSON-LD context every Certanix evidence pack names in its SIGNED BYTES. One context serves schema versions 1.2 through 1.10: a context is a vocabulary, not a validator, so terms are ADDITIVE ONLY. A term is never removed or redefined — doing so would silently change the meaning of every pack ever signed. Offline verification does NOT dereference this URI; see the README."
+  "_comment": "The JSON-LD context every Certanix evidence pack names in its SIGNED BYTES. One context serves schema versions 1.2 through 1.11: a context is a vocabulary, not a validator, so terms are ADDITIVE ONLY. A term is never removed or redefined — doing so would silently change the meaning of every pack ever signed. Offline verification does NOT dereference this URI; see the README."
 }
