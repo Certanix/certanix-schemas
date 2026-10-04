@@ -15,6 +15,12 @@ a term is legitimately added and the file changes anyway.
 
 Newest first.
 
+## 2026-10-04: v1/audio-replay-trace-1.0.schema.json
+
+| File | sha256 |
+|---|---|
+| `v1/audio-replay-trace-1.0.schema.json` | `eee41ea62b90097f58dd7b8bbd27ae5c9ec824fc9372d28511202d31f2d6f2e0` |
+
 ## 2026-10-04: v1/embodied-trace-1.0.schema.json, v1/pack-1.13.schema.json, v1/parameter-coverage-map-1.0.schema.json
 
 | File | sha256 |

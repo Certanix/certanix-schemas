@@ -57,7 +57,7 @@ published and still verify. Pack `1.13` is also published, because it is the ver
 platform emits from this release, so its schema describes real output rather than
 inventing a record. No artifact signed under the Certanix root declares `1.13` yet;
 test-signed specimens, which are not evidence, may. The standalone roots
-`delta-refusal-1.0`, `delta-report-1.0`, `embodied-trace-1.0`,
+`audio-replay-trace-1.0`, `delta-refusal-1.0`, `delta-report-1.0`, `embodied-trace-1.0`,
 `parameter-coverage-map-1.0` and `self-evidence-1.0` are published beside them. Packs
 `1.8`, `1.9` and `1.12` stayed published after the platform moved past them: each was
 published while current, and published bytes are write-once, so a superseded version is
@@ -85,6 +85,7 @@ and that file has not changed since the day it was published.*
 |---|---|---|
 | `manifest/v1/device-manifest-1.1.schema.json` | https://schema.certanix.eu/manifest/v1/device-manifest-1.1.schema.json | `c198fd743c6368bb…` |
 | `manifest/v1/device-manifest.schema.json` | https://schema.certanix.eu/manifest/v1/device-manifest.schema.json | `93ffd1da02a9d917…` |
+| `v1/audio-replay-trace-1.0.schema.json` | https://schema.certanix.eu/v1/audio-replay-trace-1.0.schema.json | `eee41ea62b90097f…` |
 | `v1/delta-refusal-1.0.schema.json` | https://schema.certanix.eu/v1/delta-refusal-1.0.schema.json | `4dcb66fdeb2006b6…` |
 | `v1/delta-report-1.0.schema.json` | https://schema.certanix.eu/v1/delta-report-1.0.schema.json | `9c7e5cf9aeb2eab3…` |
 | `v1/embodied-trace-1.0.schema.json` | https://schema.certanix.eu/v1/embodied-trace-1.0.schema.json | `0d8782076a67c849…` |

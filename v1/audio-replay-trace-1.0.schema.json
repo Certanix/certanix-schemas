@@ -1,0 +1,614 @@
+{
+  "$defs": {
+    "BaselineFigure": {
+      "additionalProperties": false,
+      "description": "One baseline figure: on which test set, of how many clips, and its silence recall.",
+      "properties": {
+        "accuracy": {
+          "title": "Accuracy",
+          "type": "number"
+        },
+        "archive": {
+          "title": "Archive",
+          "type": "string"
+        },
+        "archive_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Archive Sha256",
+          "type": "string"
+        },
+        "correct": {
+          "title": "Correct",
+          "type": "integer"
+        },
+        "n": {
+          "title": "N",
+          "type": "integer"
+        },
+        "random_seed": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Random Seed"
+        },
+        "silence": {
+          "$ref": "#/$defs/SilenceRecall"
+        },
+        "test_set": {
+          "title": "Test Set",
+          "type": "string"
+        }
+      },
+      "required": [
+        "test_set",
+        "archive",
+        "archive_sha256",
+        "n",
+        "correct",
+        "accuracy",
+        "silence"
+      ],
+      "title": "BaselineFigure",
+      "type": "object"
+    },
+    "DatasetAttribution": {
+      "additionalProperties": false,
+      "properties": {
+        "citation": {
+          "title": "Citation",
+          "type": "string"
+        },
+        "license": {
+          "title": "License",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "citation",
+        "license"
+      ],
+      "title": "DatasetAttribution",
+      "type": "object"
+    },
+    "DatasetRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "archives_sha256": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Archives Sha256",
+          "type": "object"
+        },
+        "citation": {
+          "title": "Citation",
+          "type": "string"
+        },
+        "license": {
+          "title": "License",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "citation",
+        "license",
+        "archives_sha256"
+      ],
+      "title": "DatasetRecord",
+      "type": "object"
+    },
+    "Episode": {
+      "additionalProperties": false,
+      "properties": {
+        "audio_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Audio Sha256",
+          "type": "string"
+        },
+        "clip": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Clip"
+        },
+        "clipped_samples": {
+          "title": "Clipped Samples",
+          "type": "integer"
+        },
+        "mfcc_f4_hex": {
+          "pattern": "^([0-9a-f]{8})*$",
+          "title": "Mfcc F4 Hex",
+          "type": "string"
+        },
+        "noise": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Noise"
+        },
+        "noise_offset": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Noise Offset"
+        },
+        "params": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "title": "Params",
+          "type": "object"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "predicted_label": {
+          "title": "Predicted Label",
+          "type": "string"
+        },
+        "scenario_id": {
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "scores_f4_hex": {
+          "pattern": "^([0-9a-f]{8})*$",
+          "title": "Scores F4 Hex",
+          "type": "string"
+        },
+        "seed": {
+          "title": "Seed",
+          "type": "integer"
+        },
+        "snr_db": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Snr Db"
+        },
+        "true_label": {
+          "title": "True Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "seed",
+        "params",
+        "true_label",
+        "predicted_label",
+        "passed",
+        "clip",
+        "noise",
+        "noise_offset",
+        "snr_db",
+        "clipped_samples",
+        "audio_sha256",
+        "mfcc_f4_hex",
+        "scores_f4_hex"
+      ],
+      "title": "Episode",
+      "type": "object"
+    },
+    "FrontEnd": {
+      "additionalProperties": false,
+      "properties": {
+        "clip_samples": {
+          "title": "Clip Samples",
+          "type": "integer"
+        },
+        "dct_coefficient_count": {
+          "title": "Dct Coefficient Count",
+          "type": "integer"
+        },
+        "frames": {
+          "title": "Frames",
+          "type": "integer"
+        },
+        "ops": {
+          "title": "Ops",
+          "type": "string"
+        },
+        "sample_rate": {
+          "title": "Sample Rate",
+          "type": "integer"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "stride_samples": {
+          "title": "Stride Samples",
+          "type": "integer"
+        },
+        "window_samples": {
+          "title": "Window Samples",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "window_samples",
+        "stride_samples",
+        "dct_coefficient_count",
+        "frames",
+        "sample_rate",
+        "clip_samples",
+        "ops",
+        "source"
+      ],
+      "title": "FrontEnd",
+      "type": "object"
+    },
+    "ModelBaseline": {
+      "additionalProperties": false,
+      "description": "The model's accuracy BEFORE any perturbation, on both test sets. Both are required:\n93.89% on Arm's own split is never stated without 89.53% on the official test set.",
+      "properties": {
+        "_what": {
+          "title": "What",
+          "type": "string"
+        },
+        "arm_published_accuracy": {
+          "title": "Arm Published Accuracy",
+          "type": "number"
+        },
+        "arm_testing_split": {
+          "$ref": "#/$defs/BaselineFigure"
+        },
+        "dataset_attribution": {
+          "$ref": "#/$defs/DatasetAttribution"
+        },
+        "model_source": {
+          "$ref": "#/$defs/ModelSource"
+        },
+        "official_test_set": {
+          "$ref": "#/$defs/BaselineFigure"
+        }
+      },
+      "required": [
+        "_what",
+        "arm_published_accuracy",
+        "arm_testing_split",
+        "official_test_set",
+        "dataset_attribution",
+        "model_source"
+      ],
+      "title": "ModelBaseline",
+      "type": "object"
+    },
+    "ModelSource": {
+      "additionalProperties": false,
+      "properties": {
+        "license": {
+          "title": "License",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "revision": {
+          "title": "Revision",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "source",
+        "revision",
+        "path",
+        "sha256",
+        "license"
+      ],
+      "title": "ModelSource",
+      "type": "object"
+    },
+    "ReplayCheck": {
+      "additionalProperties": false,
+      "description": "The replay check (decided 2026-10-04): the campaign ran ``runs`` times and the\ncompared outputs were byte-identical. A campaign whose replays differ is not built,\nso ``identical`` is always true in a written trace.",
+      "properties": {
+        "compared": {
+          "items": {
+            "enum": [
+              "coverage_map",
+              "results",
+              "trace"
+            ],
+            "type": "string"
+          },
+          "minItems": 3,
+          "title": "Compared",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "how": {
+          "title": "How",
+          "type": "string"
+        },
+        "identical": {
+          "const": true,
+          "title": "Identical",
+          "type": "boolean"
+        },
+        "runs": {
+          "minimum": 2,
+          "title": "Runs",
+          "type": "integer"
+        },
+        "tflite_threads": {
+          "title": "Tflite Threads",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "runs",
+        "tflite_threads",
+        "identical",
+        "compared",
+        "how"
+      ],
+      "title": "ReplayCheck",
+      "type": "object"
+    },
+    "Runtime": {
+      "additionalProperties": false,
+      "properties": {
+        "machine": {
+          "title": "Machine",
+          "type": "string"
+        },
+        "numpy": {
+          "title": "Numpy",
+          "type": "string"
+        },
+        "python": {
+          "title": "Python",
+          "type": "string"
+        },
+        "system": {
+          "title": "System",
+          "type": "string"
+        },
+        "tensorflow": {
+          "title": "Tensorflow",
+          "type": "string"
+        },
+        "tflite_delegate": {
+          "title": "Tflite Delegate",
+          "type": "string"
+        },
+        "tflite_threads": {
+          "title": "Tflite Threads",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "python",
+        "numpy",
+        "tensorflow",
+        "machine",
+        "system",
+        "tflite_threads",
+        "tflite_delegate"
+      ],
+      "title": "Runtime",
+      "type": "object"
+    },
+    "SilenceRecall": {
+      "additionalProperties": false,
+      "properties": {
+        "clips": {
+          "title": "Clips",
+          "type": "integer"
+        },
+        "correct": {
+          "title": "Correct",
+          "type": "integer"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "recall": {
+          "title": "Recall",
+          "type": "number"
+        }
+      },
+      "required": [
+        "clips",
+        "correct",
+        "recall",
+        "kind"
+      ],
+      "title": "SilenceRecall",
+      "type": "object"
+    },
+    "TraceModelRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "labels": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Labels",
+          "type": "array"
+        },
+        "license": {
+          "title": "License",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "revision": {
+          "title": "Revision",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "source",
+        "revision",
+        "path",
+        "sha256",
+        "labels",
+        "license"
+      ],
+      "title": "TraceModelRecord",
+      "type": "object"
+    }
+  },
+  "$id": "https://schema.certanix.eu/v1/audio-replay-trace-1.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "The replay trace of an audio pack (artefact type `audio-replay-trace`, format `certanix-audio-replay-trace/1`): every replayed episode with its parameters, the files it played by sha256, and the model's scores and MFCC features as exact float32 bytes; and a required `model_baseline` section stating the model's accuracy before any perturbation on BOTH test sets (Arm's own TESTING split and the official speech_commands_test_set_v0.02), each with its test set, archive sha256, N, accuracy and silence recall, with the dataset attribution and the model's source and licence. A COMPANION file, bound into a pack by its sha256, not a pack field: the pack schema does not move when this one does. FROZEN: a correction is a new version. Structural validity only.",
+  "properties": {
+    "campaign_id": {
+      "title": "Campaign Id",
+      "type": "string"
+    },
+    "convention": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Convention",
+      "type": "object"
+    },
+    "dataset": {
+      "$ref": "#/$defs/DatasetRecord"
+    },
+    "episodes": {
+      "items": {
+        "$ref": "#/$defs/Episode"
+      },
+      "title": "Episodes",
+      "type": "array"
+    },
+    "files_sha256": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Files Sha256",
+      "type": "object"
+    },
+    "format": {
+      "const": "certanix-audio-replay-trace/1",
+      "title": "Format",
+      "type": "string"
+    },
+    "front_end": {
+      "$ref": "#/$defs/FrontEnd"
+    },
+    "model": {
+      "$ref": "#/$defs/TraceModelRecord"
+    },
+    "model_baseline": {
+      "$ref": "#/$defs/ModelBaseline"
+    },
+    "replay_check": {
+      "$ref": "#/$defs/ReplayCheck"
+    },
+    "runtime": {
+      "$ref": "#/$defs/Runtime"
+    },
+    "space_id": {
+      "title": "Space Id",
+      "type": "string"
+    },
+    "testing_split_sizes": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Testing Split Sizes",
+      "type": "object"
+    }
+  },
+  "required": [
+    "format",
+    "campaign_id",
+    "space_id",
+    "model",
+    "model_baseline",
+    "front_end",
+    "dataset",
+    "runtime",
+    "testing_split_sizes",
+    "files_sha256",
+    "convention",
+    "replay_check",
+    "episodes"
+  ],
+  "title": "Certanix audio replay trace, schema 1.0",
+  "type": "object"
+}
