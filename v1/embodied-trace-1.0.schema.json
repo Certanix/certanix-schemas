@@ -1,0 +1,419 @@
+{
+  "$defs": {
+    "EpisodeTrace": {
+      "additionalProperties": false,
+      "properties": {
+        "arrays": {
+          "$ref": "#/$defs/TraceArrays"
+        },
+        "convention": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Convention",
+          "type": "object"
+        },
+        "effects": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TraceEffects"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "format": {
+          "const": "certanix-embodied-trace/1",
+          "title": "Format",
+          "type": "string"
+        },
+        "frame_sha256": {
+          "description": "per observation; sha256 hex",
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Frame Sha256",
+          "type": "array"
+        },
+        "model": {
+          "$ref": "#/$defs/TraceModel"
+        },
+        "outcome": {
+          "$ref": "#/$defs/TraceOutcome"
+        },
+        "scenario": {
+          "$ref": "#/$defs/TraceScenario"
+        },
+        "state_sha256": {
+          "description": "per observation; sha256 hex",
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "State Sha256",
+          "type": "array"
+        },
+        "steps": {
+          "title": "Steps",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "format",
+        "arrays",
+        "convention",
+        "frame_sha256",
+        "state_sha256",
+        "model",
+        "outcome",
+        "scenario",
+        "steps"
+      ],
+      "title": "EpisodeTrace",
+      "type": "object"
+    },
+    "TraceArray": {
+      "additionalProperties": false,
+      "description": "One array as exact bytes: base64 of the C-order buffer, dtype with byte order.",
+      "properties": {
+        "b64": {
+          "title": "B64",
+          "type": "string"
+        },
+        "dtype": {
+          "description": "numpy notation, byte order explicit",
+          "pattern": "^[<>|][a-z][0-9]+$",
+          "title": "Dtype",
+          "type": "string"
+        },
+        "shape": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Shape",
+          "type": "array"
+        }
+      },
+      "required": [
+        "dtype",
+        "shape",
+        "b64"
+      ],
+      "title": "TraceArray",
+      "type": "object"
+    },
+    "TraceArrays": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/TraceArray",
+          "description": "the action applied, one row per step"
+        },
+        "contact_offsets": {
+          "$ref": "#/$defs/TraceArray"
+        },
+        "contact_pairs": {
+          "$ref": "#/$defs/TraceArray",
+          "description": "geom index pairs, see model.geom_names"
+        },
+        "ctrl": {
+          "$ref": "#/$defs/TraceArray"
+        },
+        "policy_action": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TraceArray"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "WP2, only under control latency: what the policy emitted per step"
+        },
+        "qpos": {
+          "$ref": "#/$defs/TraceArray",
+          "description": "row 0 after reset, row i+1 after step i"
+        },
+        "qvel": {
+          "$ref": "#/$defs/TraceArray"
+        },
+        "reward": {
+          "$ref": "#/$defs/TraceArray"
+        }
+      },
+      "required": [
+        "action",
+        "contact_offsets",
+        "contact_pairs",
+        "ctrl",
+        "qpos",
+        "qvel",
+        "reward"
+      ],
+      "title": "TraceArrays",
+      "type": "object"
+    },
+    "TraceEffects": {
+      "additionalProperties": false,
+      "description": "WP2, present only when a scenario changed something: what was actually applied.",
+      "properties": {
+        "params_applied": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Params Applied",
+          "type": "array"
+        },
+        "reset_mode": {
+          "anyOf": [
+            {
+              "const": "explicit",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reset Mode"
+        }
+      },
+      "required": [
+        "params_applied"
+      ],
+      "title": "TraceEffects",
+      "type": "object"
+    },
+    "TraceModel": {
+      "additionalProperties": false,
+      "properties": {
+        "geom_names": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Geom Names",
+          "type": "array"
+        },
+        "integrator": {
+          "title": "Integrator",
+          "type": "string"
+        },
+        "n_sub_steps": {
+          "title": "N Sub Steps",
+          "type": "integer"
+        },
+        "nq": {
+          "title": "Nq",
+          "type": "integer"
+        },
+        "nu": {
+          "title": "Nu",
+          "type": "integer"
+        },
+        "nv": {
+          "title": "Nv",
+          "type": "integer"
+        },
+        "timestep_s": {
+          "title": "Timestep S",
+          "type": "number"
+        },
+        "xml_physics": {
+          "$ref": "#/$defs/TraceXmlPhysics"
+        }
+      },
+      "required": [
+        "geom_names",
+        "integrator",
+        "n_sub_steps",
+        "nq",
+        "nu",
+        "nv",
+        "timestep_s",
+        "xml_physics"
+      ],
+      "title": "TraceModel",
+      "type": "object"
+    },
+    "TraceOutcome": {
+      "additionalProperties": false,
+      "properties": {
+        "max_reward": {
+          "title": "Max Reward",
+          "type": "number"
+        },
+        "steps_executed": {
+          "title": "Steps Executed",
+          "type": "integer"
+        },
+        "success": {
+          "title": "Success",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "max_reward",
+        "steps_executed",
+        "success"
+      ],
+      "title": "TraceOutcome",
+      "type": "object"
+    },
+    "TraceScenario": {
+      "additionalProperties": false,
+      "properties": {
+        "camera": {
+          "title": "Camera",
+          "type": "string"
+        },
+        "env_seed": {
+          "title": "Env Seed",
+          "type": "integer"
+        },
+        "height": {
+          "title": "Height",
+          "type": "integer"
+        },
+        "integrator": {
+          "title": "Integrator",
+          "type": "string"
+        },
+        "max_steps": {
+          "title": "Max Steps",
+          "type": "integer"
+        },
+        "n_sub_steps": {
+          "title": "N Sub Steps",
+          "type": "integer"
+        },
+        "params": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "WP2: the scenario's parameter values",
+          "title": "Params"
+        },
+        "reset_mode": {
+          "anyOf": [
+            {
+              "const": "explicit",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "WP2: absent means the seed-derived reset",
+          "title": "Reset Mode"
+        },
+        "scenario_id": {
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "task": {
+          "title": "Task",
+          "type": "string"
+        },
+        "timestep_s": {
+          "title": "Timestep S",
+          "type": "number"
+        },
+        "width": {
+          "title": "Width",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "camera",
+        "env_seed",
+        "height",
+        "integrator",
+        "max_steps",
+        "n_sub_steps",
+        "scenario_id",
+        "task",
+        "timestep_s",
+        "width"
+      ],
+      "title": "TraceScenario",
+      "type": "object"
+    },
+    "TraceXmlPhysics": {
+      "additionalProperties": false,
+      "properties": {
+        "integrator": {
+          "title": "Integrator",
+          "type": "integer"
+        },
+        "timestep_s": {
+          "title": "Timestep S",
+          "type": "number"
+        }
+      },
+      "required": [
+        "integrator",
+        "timestep_s"
+      ],
+      "title": "TraceXmlPhysics",
+      "type": "object"
+    }
+  },
+  "$id": "https://schema.certanix.eu/v1/embodied-trace-1.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "The trace companion of an embodied pack (artefact type `embodied-trace`): a `certanix-embodied-trace-bundle/1` file holding every episode as a `certanix-embodied-trace/1` record. Arrays are exact bytes (base64, dtype with byte order, shape), never rounded floats. Fields marked WP2 are optional and appear only when a scenario changed something. A COMPANION file, bound into a pack by its sha256, not a pack field: the pack schema does not move when this one does. FROZEN: a correction is a new version. Structural validity only.",
+  "properties": {
+    "campaign_id": {
+      "title": "Campaign Id",
+      "type": "string"
+    },
+    "convention": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Convention",
+      "type": "object"
+    },
+    "episodes": {
+      "items": {
+        "$ref": "#/$defs/EpisodeTrace"
+      },
+      "title": "Episodes",
+      "type": "array"
+    },
+    "format": {
+      "const": "certanix-embodied-trace-bundle/1",
+      "title": "Format",
+      "type": "string"
+    }
+  },
+  "required": [
+    "format",
+    "campaign_id",
+    "convention",
+    "episodes"
+  ],
+  "title": "Certanix embodied trace, schema 1.0",
+  "type": "object"
+}
