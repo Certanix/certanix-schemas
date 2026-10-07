@@ -1,6 +1,6 @@
 # Changelog
 
-Every published file with its sha256 at publication: the **immutability ledger**, read
+Every published file with its sha256 at publication — the **immutability ledger**, read
 back by `tools/build_schemas_repo.py --check`, which refuses to rebuild any path whose
 bytes would change. A digest that moves means a file was edited, which is forbidden for
 everything but additive context terms; the correct response to needing different bytes is
@@ -14,12 +14,6 @@ file. The generator derives the comment, and the corrected text is published the
 a term is legitimately added and the file changes anyway.
 
 Newest first.
-
-## 2026-10-07: v1/ldf-1.0.schema.json
-
-| File | sha256 |
-|---|---|
-| `v1/ldf-1.0.schema.json` | `c73a16e0c76cfcdc9c98fd318a397e1815ae2ff0b7f76323f8d90d66675f4a03` |
 
 ## 2026-10-04: v1/audio-replay-trace-1.0.schema.json
 
