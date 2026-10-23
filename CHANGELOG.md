@@ -6,14 +6,14 @@ bytes would change. A digest that moves means a file was edited, which is forbid
 everything but additive context terms; the correct response to needing different bytes is
 a new path, never a new digest at an old one.
 
-**A known lag, kept on purpose.** The `_comment` inside `v1/evidence-context.jsonld` says it serves
-schema versions 1.2 through 1.12, while the published pack versions run 1.2 through 1.13, all naming that one
-context. It is deliberately not corrected. Published bytes are write-once, and rewriting a
-comment adds no term, so it is not an additive change: it would be an edit to a published
-file. The generator derives the comment, and the corrected text is published the next time
-a term is legitimately added and the file changes anyway.
-
 Newest first.
+
+## 2026-10-23: v1/pack-1.14.schema.json, v1/evidence-context.jsonld (additive)
+
+| File | sha256 |
+|---|---|
+| `v1/evidence-context.jsonld` | `9f18a4a3a3a2f46276c457cdf690707fa96d388fb5cafdbdcf858323c0ab14ce` |
+| `v1/pack-1.14.schema.json` | `2fe4ffe6e2a6a3c3ed77d40e0405de433301141c67109e33c7888ea781bf37e9` |
 
 ## 2026-10-04: v1/audio-replay-trace-1.0.schema.json
 
