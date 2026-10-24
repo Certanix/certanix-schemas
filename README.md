@@ -85,6 +85,8 @@ and that file has not changed since the day it was published.*
 |---|---|---|
 | `manifest/v1/device-manifest-1.1.schema.json` | https://schema.certanix.eu/manifest/v1/device-manifest-1.1.schema.json | `c198fd743c6368bb…` |
 | `manifest/v1/device-manifest.schema.json` | https://schema.certanix.eu/manifest/v1/device-manifest.schema.json | `93ffd1da02a9d917…` |
+| `references/regulation-clauses.html` | https://schema.certanix.eu/references/regulation-clauses.html | `3ba62f7c6cb812ee…` |
+| `references/regulation-clauses.md` | https://schema.certanix.eu/references/regulation-clauses.md | `c1e12037753c158a…` |
 | `v1/audio-replay-trace-1.0.schema.json` | https://schema.certanix.eu/v1/audio-replay-trace-1.0.schema.json | `eee41ea62b90097f…` |
 | `v1/delta-refusal-1.0.schema.json` | https://schema.certanix.eu/v1/delta-refusal-1.0.schema.json | `4dcb66fdeb2006b6…` |
 | `v1/delta-report-1.0.schema.json` | https://schema.certanix.eu/v1/delta-report-1.0.schema.json | `9c7e5cf9aeb2eab3…` |

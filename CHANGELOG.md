@@ -8,6 +8,13 @@ a new path, never a new digest at an old one.
 
 Newest first.
 
+## 2026-10-24: references/regulation-clauses.html, references/regulation-clauses.md
+
+| File | sha256 |
+|---|---|
+| `references/regulation-clauses.html` | `3ba62f7c6cb812ee981e7b0823fb5a16eba73e606a3f6805a3efd4c7235ce8ae` |
+| `references/regulation-clauses.md` | `c1e12037753c158a29745ef15778bac0d547711c7d00feb675db63d5c09a7fb3` |
+
 ## 2026-10-23: v1/pack-1.14.schema.json, v1/evidence-context.jsonld (additive)
 
 | File | sha256 |
