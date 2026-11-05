@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="referrer" content="no-referrer">
+<title>Signature curve</title>
+<style>
+:root{color-scheme:light dark;--ink:#16181d;--muted:#5b616e;--rule:#d9dce3;--panel:#f4f5f8;
+--link:#1d4ed8;--paper:#ffffff}
+@media (prefers-color-scheme: dark){:root{--ink:#e6e8ee;--muted:#9aa1ae;--rule:#2c313b;
+--panel:#171a21;--link:#8ab4ff;--paper:#0e1015}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.6;
+font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+main{max-width:860px;margin:0 auto;padding:48px 20px 64px}
+h1{font-size:28px;margin:0 0 12px;letter-spacing:.01em}
+h2{font-size:17px;margin:36px 0 8px}
+p{margin:0 0 14px}
+a{color:var(--link)}
+code{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.lede{font-size:18px}
+.table{overflow-x:auto;border:1px solid var(--rule);border-radius:6px}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;padding:8px 12px;border-top:1px solid var(--rule);vertical-align:top}
+thead th{border-top:0;background:var(--panel);font-size:13px;color:var(--muted)}
+td:last-child code,.lede code{overflow-wrap:anywhere;word-break:break-all}
+.note{margin-top:28px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<main>
+<h1>A note on the signature curve in published pack schemas</h1>
+<p>The published evidence-pack schemas, versions 1.2 and 1.6 to 1.14, describe the signature as ECDSA-P384. That text is wrong. The verifier enforces ECDSA P-256.</p>
+<h2>What is true today</h2>
+<ul>
+<li>The Certanix signing key published at <code>certanix.eu/verify/keys/certanix-hsm.pub</code> is a P-256 key.</li>
+<li>From version 0.17.0, <code>certanix-verify</code> accepts P-256 keys only. Any other curve, or a key that is not an EC key, is refused with exit code 1 (<code>USAGE</code>), which says nothing about the pack.</li>
+<li>Before 0.17.0, the verifier did not refuse a key on another curve.</li>
+</ul>
+<h2>Where the wrong text is</h2>
+<p>Each of those schemas has it in the <code>Signature</code> definition: in the description, and as the default value of <code>algorithm</code>. A schema does not sign or verify anything, so this text is not used to check a signature. The verifier takes its rule from its own code.</p>
+<h2>Why the schemas are not being edited</h2>
+<p>Published schemas are write-once. Someone may already rely on the exact bytes of a schema version, so those files stay as they are, with the wrong text.</p>
+<h2>Where the correction ships</h2>
+<p>In the next published pack schema version. The <code>certanix-verify</code> 0.17.0 README and changelog state the difference in the meantime. No date is given here for the next schema version.</p>
+<h2>What you need to do</h2>
+<p>Nothing changes for a pack signed with a P-256 key. If you read the curve from a schema, read P-256. If you check Certanix packs with your own tooling, use P-256.</p>
+<p class="note">The page form of <a href="signature-curve.md"><code>notes/signature-curve.md</code></a>.
+Back to <a href="../">schema.certanix.eu</a>.</p>
+</main>
+</body>
+</html>
