@@ -8,6 +8,13 @@ a new path, never a new digest at an old one.
 
 Newest first.
 
+## 2026-11-05: notes/signature-curve.html, notes/signature-curve.md
+
+| File | sha256 |
+|---|---|
+| `notes/signature-curve.html` | `8ab0505b37416248cf4c20546443c9ea306f00dd11f4fa7683bc2609a737f2e2` |
+| `notes/signature-curve.md` | `dbd1b1431ea47dcdc2cbcb0dd12183f952abda165a024eea3470553f7352ee36` |
+
 ## 2026-10-24: references/regulation-clauses.html, references/regulation-clauses.md
 
 | File | sha256 |
