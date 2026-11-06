@@ -8,6 +8,12 @@ a new path, never a new digest at an old one.
 
 Newest first.
 
+## 2026-11-06: v1/attestation-1.0.schema.json
+
+| File | sha256 |
+|---|---|
+| `v1/attestation-1.0.schema.json` | `08e9f9b3ec7a115422cf1ec19c07fdba7370dedb5e03ed5dfeb89d7ee77a6e84` |
+
 ## 2026-11-05: notes/signature-curve.html, notes/signature-curve.md
 
 | File | sha256 |
