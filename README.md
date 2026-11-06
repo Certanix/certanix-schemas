@@ -57,15 +57,15 @@ published and still verify. Pack `1.14` is also published, because it is the ver
 platform emits from this release, so its schema describes real output rather than
 inventing a record. No artifact signed under the Certanix root declares `1.14` yet;
 test-signed specimens, which are not evidence, may. The standalone roots
-`audio-replay-trace-1.0`, `delta-refusal-1.0`, `delta-report-1.0`, `embodied-trace-1.0`,
-`parameter-coverage-map-1.0` and `self-evidence-1.0` are published beside them. Packs
-`1.8`, `1.9`, `1.12` and `1.13` stayed published after the platform moved past them: each
-was published while current, and published bytes are write-once, so a superseded version
-is never withdrawn. The verifier knows 16 values (`None`, `1.0`, `1.1`, `1.2`, `1.3`,
-`1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `1.9`, `1.10`, `1.11`, `1.12`, `1.13`, `1.14`); the
-rest are not published, because writing a schema for a pack version that no artifact uses
-would be inventing a record. The device manifest has two published revisions:
-`manifest/v1/device-manifest.schema.json`, frozen, and
+`attestation-1.0`, `audio-replay-trace-1.0`, `delta-refusal-1.0`, `delta-report-1.0`,
+`embodied-trace-1.0`, `parameter-coverage-map-1.0` and `self-evidence-1.0` are published
+beside them. Packs `1.8`, `1.9`, `1.12` and `1.13` stayed published after the platform
+moved past them: each was published while current, and published bytes are write-once, so
+a superseded version is never withdrawn. The verifier knows 16 values (`None`, `1.0`,
+`1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `1.9`, `1.10`, `1.11`, `1.12`,
+`1.13`, `1.14`); the rest are not published, because writing a schema for a pack version
+that no artifact uses would be inventing a record. The device manifest has two published
+revisions: `manifest/v1/device-manifest.schema.json`, frozen, and
 `manifest/v1/device-manifest-1.1.schema.json`, which adds the optional fields
 `arm_length_m`, `drive_type`, `inertia_kg_m2`, `rotor_layout`, `rotor_max_speed_rad_s`,
 `rotor_max_thrust_n`, `rotor_torque_ratio_m` and `vehicle_data`. The frozen v1 schema
@@ -89,6 +89,7 @@ and that file has not changed since the day it was published.*
 | `notes/signature-curve.md` | https://schema.certanix.eu/notes/signature-curve.md | `dbd1b1431ea47dcd…` |
 | `references/regulation-clauses.html` | https://schema.certanix.eu/references/regulation-clauses.html | `3ba62f7c6cb812ee…` |
 | `references/regulation-clauses.md` | https://schema.certanix.eu/references/regulation-clauses.md | `c1e12037753c158a…` |
+| `v1/attestation-1.0.schema.json` | https://schema.certanix.eu/v1/attestation-1.0.schema.json | `08e9f9b3ec7a1154…` |
 | `v1/audio-replay-trace-1.0.schema.json` | https://schema.certanix.eu/v1/audio-replay-trace-1.0.schema.json | `eee41ea62b90097f…` |
 | `v1/delta-refusal-1.0.schema.json` | https://schema.certanix.eu/v1/delta-refusal-1.0.schema.json | `4dcb66fdeb2006b6…` |
 | `v1/delta-report-1.0.schema.json` | https://schema.certanix.eu/v1/delta-report-1.0.schema.json | `9c7e5cf9aeb2eab3…` |
