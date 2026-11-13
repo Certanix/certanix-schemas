@@ -51,9 +51,12 @@ terms may be added, never removed and never redefined. Every digest is recorded 
 publication in <a href="CHANGELOG.md">CHANGELOG.md</a>, the immutability ledger.</p>
 
 <h2>Notes</h2>
-<p><a href="notes/signature-curve.html">Signature curve</a>: the published pack schemas 1.2 and
-1.6 to 1.14 describe the signature as ECDSA-P384. That text is wrong: the verifier enforces
-ECDSA P-256. The note says why the schemas stay as published, and what to read instead.</p>
+<p><a href="notes/signature-curve-p256.html">Signature curve, revised</a>: pack schema 1.15
+describes the signature as ECDSA P-256, as the verifier enforces. The published pack schemas
+1.2 and 1.6 to 1.14 describe it as ECDSA-P384 and stay as published. Both Certanix signing
+keys are P-256. This note replaces the first one.</p>
+<p><a href="notes/signature-curve.html">Signature curve</a>: the first note, published on
+5 November 2026 and served as published.</p>
 
 <h2>What is served</h2>
 <div class="table">
@@ -62,6 +65,8 @@ ECDSA P-256. The note says why the schemas stay as published, and what to read i
 <tbody>
 <tr><td><a href="manifest/v1/device-manifest-1.1.schema.json"><code>manifest/v1/device-manifest-1.1.schema.json</code></a></td><td><code>c198fd743c6368bb4aef15c3a806a9c21ba59faa53aecf09919db64694aa6d39</code></td></tr>
 <tr><td><a href="manifest/v1/device-manifest.schema.json"><code>manifest/v1/device-manifest.schema.json</code></a></td><td><code>93ffd1da02a9d917caa5fab09fe50a80ea83b76579160e0f1a54a0ddb1747a26</code></td></tr>
+<tr><td><a href="notes/signature-curve-p256.html"><code>notes/signature-curve-p256.html</code></a></td><td><code>48d537c42d1190052f03b5d9e8f54b7d09fa0232cd279742e981f88ee9dd5cb0</code></td></tr>
+<tr><td><a href="notes/signature-curve-p256.md"><code>notes/signature-curve-p256.md</code></a></td><td><code>19c52e8cdcbd3a4175f0c4619b59301ccff9b1cee20cbf45702532cff0a47745</code></td></tr>
 <tr><td><a href="notes/signature-curve.html"><code>notes/signature-curve.html</code></a></td><td><code>8ab0505b37416248cf4c20546443c9ea306f00dd11f4fa7683bc2609a737f2e2</code></td></tr>
 <tr><td><a href="notes/signature-curve.md"><code>notes/signature-curve.md</code></a></td><td><code>dbd1b1431ea47dcdc2cbcb0dd12183f952abda165a024eea3470553f7352ee36</code></td></tr>
 <tr><td><a href="references/regulation-clauses.html"><code>references/regulation-clauses.html</code></a></td><td><code>3ba62f7c6cb812ee981e7b0823fb5a16eba73e606a3f6805a3efd4c7235ce8ae</code></td></tr>
@@ -71,12 +76,13 @@ ECDSA P-256. The note says why the schemas stay as published, and what to read i
 <tr><td><a href="v1/delta-refusal-1.0.schema.json"><code>v1/delta-refusal-1.0.schema.json</code></a></td><td><code>4dcb66fdeb2006b6aeebd3a79f88c7d22f7a7a819bcecb934f8d6d6af92e4bc6</code></td></tr>
 <tr><td><a href="v1/delta-report-1.0.schema.json"><code>v1/delta-report-1.0.schema.json</code></a></td><td><code>9c7e5cf9aeb2eab3f9a004588e7075c435178b5a63472e1f248a0151886a8145</code></td></tr>
 <tr><td><a href="v1/embodied-trace-1.0.schema.json"><code>v1/embodied-trace-1.0.schema.json</code></a></td><td><code>0d8782076a67c8495a62c9a056c720da4d0adb78810d02bffdbe86e5f97d061e</code></td></tr>
-<tr><td><a href="v1/evidence-context.jsonld"><code>v1/evidence-context.jsonld</code></a></td><td><code>9f18a4a3a3a2f46276c457cdf690707fa96d388fb5cafdbdcf858323c0ab14ce</code></td></tr>
+<tr><td><a href="v1/evidence-context.jsonld"><code>v1/evidence-context.jsonld</code></a></td><td><code>8161337f128545ebc8dc9e4c3e29b29da3d36120af379887cadfe7125992dce3</code></td></tr>
 <tr><td><a href="v1/pack-1.10.schema.json"><code>v1/pack-1.10.schema.json</code></a></td><td><code>047957f25548ea52789dd2b7b34dfeb601c9b090132b4776d414796149002c6a</code></td></tr>
 <tr><td><a href="v1/pack-1.11.schema.json"><code>v1/pack-1.11.schema.json</code></a></td><td><code>6f5a6343d6449607564a6ecfbadf9bc7927929ce80e6f7ab8ae267ac6d63baba</code></td></tr>
 <tr><td><a href="v1/pack-1.12.schema.json"><code>v1/pack-1.12.schema.json</code></a></td><td><code>06ef89887becb818f609784eb0405dd68163f3bb805833a6758065900ad8020f</code></td></tr>
 <tr><td><a href="v1/pack-1.13.schema.json"><code>v1/pack-1.13.schema.json</code></a></td><td><code>798f7bd852457400f1ba0ff8c1026c7754aeb7dbb42af2a1202ce5bf2e85042a</code></td></tr>
 <tr><td><a href="v1/pack-1.14.schema.json"><code>v1/pack-1.14.schema.json</code></a></td><td><code>2fe4ffe6e2a6a3c3ed77d40e0405de433301141c67109e33c7888ea781bf37e9</code></td></tr>
+<tr><td><a href="v1/pack-1.15.schema.json"><code>v1/pack-1.15.schema.json</code></a></td><td><code>8ef310c7b29fc53c8d1407cac2193d30af0ff9a8955885aa55a8fbd8e17f9c67</code></td></tr>
 <tr><td><a href="v1/pack-1.2.schema.json"><code>v1/pack-1.2.schema.json</code></a></td><td><code>b02315b9047eacd0988eb494cf630fa817a8d8acad57005784c91f85d9f40d22</code></td></tr>
 <tr><td><a href="v1/pack-1.6.schema.json"><code>v1/pack-1.6.schema.json</code></a></td><td><code>1fe2a64165dc70c2ae11a0c8df613016477ebb38679a624705c6843d8d0a7270</code></td></tr>
 <tr><td><a href="v1/pack-1.7.schema.json"><code>v1/pack-1.7.schema.json</code></a></td><td><code>02a027e3f9b876f6db8b658ae210790871466d607c08f7cb34545be5ed06fc45</code></td></tr>
