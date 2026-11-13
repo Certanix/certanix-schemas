@@ -16,6 +16,8 @@
     "assurance_target": "cert:assuranceTarget",
     "backend": "cert:backend",
     "base_value": "cert:baseValue",
+    "build_digest": "cert:buildDigest",
+    "build_identity": "cert:buildIdentity",
     "camera": "cert:camera",
     "campaign": "cert:campaign",
     "campaign_id": "cert:campaignId",
@@ -121,6 +123,7 @@
     "relation": "cert:relation",
     "renderer": "cert:renderer",
     "repo": "cert:repo",
+    "reproducibility_claim": "cert:reproducibilityClaim",
     "revision": "cert:revision",
     "rotor_count": "cert:rotorCount",
     "route": "cert:route",
@@ -140,6 +143,7 @@
     "simulated": "cert:simulated",
     "solver_class": "cert:solverClass",
     "source": "cert:source",
+    "source_commit": "cert:sourceCommit",
     "speed_fidelity": "cert:speedFidelity",
     "status": "cert:status",
     "subject": "cert:subject",
@@ -151,6 +155,7 @@
     "tenant": "cert:tenant",
     "tolerance_rel": "cert:toleranceRel",
     "tool": "cert:tool",
+    "toolchain_digest": "cert:toolchainDigest",
     "total_simulation_hours": "cert:totalSimulationHours",
     "track_width_m": "cert:trackWidthM",
     "twin_fidelity": "cert:twinFidelity",
@@ -168,5 +173,5 @@
     "within_tolerance": "cert:withinTolerance",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-  "_comment": "The JSON-LD context every Certanix evidence pack names in its SIGNED BYTES. One context serves schema versions 1.2 through 1.14: a context is a vocabulary, not a validator, so terms are ADDITIVE ONLY. A term is never removed or redefined — doing so would silently change the meaning of every pack ever signed. Offline verification does NOT dereference this URI; see the README."
+  "_comment": "The JSON-LD context every Certanix evidence pack names in its SIGNED BYTES. One context serves schema versions 1.2 through 1.15: a context is a vocabulary, not a validator, so terms are ADDITIVE ONLY. A term is never removed or redefined — doing so would silently change the meaning of every pack ever signed. Offline verification does NOT dereference this URI; see the README."
 }

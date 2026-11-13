@@ -28,7 +28,7 @@ proof.
 
 Every published path is **write-once**. `v1/` holds the vocabulary and the schema shapes
 as published; those bytes never change again. A correction is therefore not an edit: it
-is a **new path**, a new `pack-1.15`, or a whole new `v2/` prefix minted alongside, with
+is a **new path**, a new `pack-1.16`, or a whole new `v2/` prefix minted alongside, with
 `v1/` left standing forever. That is the same sign-forward rule the evidence itself
 follows: you do not amend a signed record, you sign a superseding one and keep both.
 
@@ -51,21 +51,20 @@ published digest.
 
 ## What is published, and what is deliberately not
 
-Pack schema versions `1.2`, `1.6`, `1.7` and `1.11` are the versions current signed
-artifacts reference; `1.10` is referenced only by superseded signed artifacts, which stay
-published and still verify. Pack `1.14` is also published, because it is the version the
-platform emits from this release, so its schema describes real output rather than
-inventing a record. No artifact signed under the Certanix root declares `1.14` yet;
-test-signed specimens, which are not evidence, may. The standalone roots
+Pack schema versions `1.2`, `1.6`, `1.7`, `1.11` and `1.14` are the versions current
+signed artifacts reference; `1.10` is referenced only by superseded signed artifacts,
+which stay published and still verify. Pack `1.14` is also the version the platform emits
+from this release. Pack `1.15` is also published, because the platform emits it for packs
+from the `sim-sitl-ardupilot` harness; every other pack is `1.14`. The standalone roots
 `attestation-1.0`, `audio-replay-trace-1.0`, `delta-refusal-1.0`, `delta-report-1.0`,
 `embodied-trace-1.0`, `parameter-coverage-map-1.0` and `self-evidence-1.0` are published
 beside them. Packs `1.8`, `1.9`, `1.12` and `1.13` stayed published after the platform
 moved past them: each was published while current, and published bytes are write-once, so
-a superseded version is never withdrawn. The verifier knows 16 values (`None`, `1.0`,
+a superseded version is never withdrawn. The verifier knows 17 values (`None`, `1.0`,
 `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `1.9`, `1.10`, `1.11`, `1.12`,
-`1.13`, `1.14`); the rest are not published, because writing a schema for a pack version
-that no artifact uses would be inventing a record. The device manifest has two published
-revisions: `manifest/v1/device-manifest.schema.json`, frozen, and
+`1.13`, `1.14`, `1.15`); the rest are not published, because writing a schema for a pack
+version that no artifact uses would be inventing a record. The device manifest has two
+published revisions: `manifest/v1/device-manifest.schema.json`, frozen, and
 `manifest/v1/device-manifest-1.1.schema.json`, which adds the optional fields
 `arm_length_m`, `drive_type`, `inertia_kg_m2`, `rotor_layout`, `rotor_max_speed_rad_s`,
 `rotor_max_thrust_n`, `rotor_torque_ratio_m` and `vehicle_data`. The frozen v1 schema
@@ -85,6 +84,8 @@ and that file has not changed since the day it was published.*
 |---|---|---|
 | `manifest/v1/device-manifest-1.1.schema.json` | https://schema.certanix.eu/manifest/v1/device-manifest-1.1.schema.json | `c198fd743c6368bb…` |
 | `manifest/v1/device-manifest.schema.json` | https://schema.certanix.eu/manifest/v1/device-manifest.schema.json | `93ffd1da02a9d917…` |
+| `notes/signature-curve-p256.html` | https://schema.certanix.eu/notes/signature-curve-p256.html | `48d537c42d119005…` |
+| `notes/signature-curve-p256.md` | https://schema.certanix.eu/notes/signature-curve-p256.md | `19c52e8cdcbd3a41…` |
 | `notes/signature-curve.html` | https://schema.certanix.eu/notes/signature-curve.html | `8ab0505b37416248…` |
 | `notes/signature-curve.md` | https://schema.certanix.eu/notes/signature-curve.md | `dbd1b1431ea47dcd…` |
 | `references/regulation-clauses.html` | https://schema.certanix.eu/references/regulation-clauses.html | `3ba62f7c6cb812ee…` |
@@ -94,12 +95,13 @@ and that file has not changed since the day it was published.*
 | `v1/delta-refusal-1.0.schema.json` | https://schema.certanix.eu/v1/delta-refusal-1.0.schema.json | `4dcb66fdeb2006b6…` |
 | `v1/delta-report-1.0.schema.json` | https://schema.certanix.eu/v1/delta-report-1.0.schema.json | `9c7e5cf9aeb2eab3…` |
 | `v1/embodied-trace-1.0.schema.json` | https://schema.certanix.eu/v1/embodied-trace-1.0.schema.json | `0d8782076a67c849…` |
-| `v1/evidence-context.jsonld` | https://schema.certanix.eu/v1/evidence-context.jsonld | `9f18a4a3a3a2f462…` |
+| `v1/evidence-context.jsonld` | https://schema.certanix.eu/v1/evidence-context.jsonld | `8161337f128545eb…` |
 | `v1/pack-1.10.schema.json` | https://schema.certanix.eu/v1/pack-1.10.schema.json | `047957f25548ea52…` |
 | `v1/pack-1.11.schema.json` | https://schema.certanix.eu/v1/pack-1.11.schema.json | `6f5a6343d6449607…` |
 | `v1/pack-1.12.schema.json` | https://schema.certanix.eu/v1/pack-1.12.schema.json | `06ef89887becb818…` |
 | `v1/pack-1.13.schema.json` | https://schema.certanix.eu/v1/pack-1.13.schema.json | `798f7bd852457400…` |
 | `v1/pack-1.14.schema.json` | https://schema.certanix.eu/v1/pack-1.14.schema.json | `2fe4ffe6e2a6a3c3…` |
+| `v1/pack-1.15.schema.json` | https://schema.certanix.eu/v1/pack-1.15.schema.json | `8ef310c7b29fc53c…` |
 | `v1/pack-1.2.schema.json` | https://schema.certanix.eu/v1/pack-1.2.schema.json | `b02315b9047eacd0…` |
 | `v1/pack-1.6.schema.json` | https://schema.certanix.eu/v1/pack-1.6.schema.json | `1fe2a64165dc70c2…` |
 | `v1/pack-1.7.schema.json` | https://schema.certanix.eu/v1/pack-1.7.schema.json | `02a027e3f9b876f6…` |
