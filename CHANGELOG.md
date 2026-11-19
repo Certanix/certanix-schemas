@@ -8,6 +8,13 @@ a new path, never a new digest at an old one.
 
 Newest first.
 
+## 2026-11-19: v1/pack-1.16.schema.json, v1/evidence-context.jsonld (additive)
+
+| File | sha256 |
+|---|---|
+| `v1/evidence-context.jsonld` | `f945da28720fe1458c422c5f36cb42adaf16481b6259867c693cd6df15a72587` |
+| `v1/pack-1.16.schema.json` | `d188f55b01b67f95480d89c932c56f0e059f4ddae4ea6247a054abb43c2e51c5` |
+
 ## 2026-11-13: notes/signature-curve-p256.html, notes/signature-curve-p256.md, v1/pack-1.15.schema.json, v1/evidence-context.jsonld (additive)
 
 | File | sha256 |
