@@ -104,7 +104,7 @@ and that file has not changed since the day it was published.*
 | `v1/pack-1.13.schema.json` | https://schema.certanix.eu/v1/pack-1.13.schema.json | `798f7bd852457400…` |
 | `v1/pack-1.14.schema.json` | https://schema.certanix.eu/v1/pack-1.14.schema.json | `2fe4ffe6e2a6a3c3…` |
 | `v1/pack-1.15.schema.json` | https://schema.certanix.eu/v1/pack-1.15.schema.json | `8ef310c7b29fc53c…` |
-| `v1/pack-1.16.schema.json` | https://schema.certanix.eu/v1/pack-1.16.schema.json | `d188f55b01b67f95…` |
+| `v1/pack-1.16.schema.json` | https://schema.certanix.eu/v1/pack-1.16.schema.json | `e4667ada1623492b…` |
 | `v1/pack-1.2.schema.json` | https://schema.certanix.eu/v1/pack-1.2.schema.json | `b02315b9047eacd0…` |
 | `v1/pack-1.6.schema.json` | https://schema.certanix.eu/v1/pack-1.6.schema.json | `1fe2a64165dc70c2…` |
 | `v1/pack-1.7.schema.json` | https://schema.certanix.eu/v1/pack-1.7.schema.json | `02a027e3f9b876f6…` |
